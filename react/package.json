@@ -10,7 +10,7 @@
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "cd .. && husky install react/.husky"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -31,5 +31,10 @@
     "prettier": "3.0.3",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown",
+    "*.{ts,tsx}": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }
