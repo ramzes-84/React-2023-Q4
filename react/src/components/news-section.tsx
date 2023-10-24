@@ -1,18 +1,18 @@
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import { CompProps } from '../types';
+import Spinner from './spinner';
 
 type NewsState = {
-  news: string;
+  news: ReactElement[];
+  isLoading: boolean;
 };
 
 export default class NewsSection extends Component<CompProps, NewsState> {
-  state = { news: 'Loading news' };
+  state: NewsState = { news: [], isLoading: true };
+
+  componentDidMount = async () => {};
 
   render() {
-    return (
-      <div>
-        <img src="/spinner.gif" alt="Loading..." width={100} />
-      </div>
-    );
+    return <div>{this.state.isLoading && <Spinner />}</div>;
   }
 }
