@@ -6,10 +6,7 @@ type SearchState = {
 };
 
 export default class Search extends Component<CompProps, SearchState> {
-  constructor(props: CompProps) {
-    super(props);
-    this.state = { keyword: localStorage.getItem('keyword') || '' };
-  }
+  state = { keyword: localStorage.getItem('keyword') || '' };
 
   handleSearch(e: SyntheticEvent<HTMLInputElement, MouseEvent>) {
     e.preventDefault;

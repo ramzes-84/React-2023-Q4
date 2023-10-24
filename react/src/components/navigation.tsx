@@ -6,10 +6,7 @@ type NavState = {
 };
 
 export default class Navigation extends Component<CompProps, NavState> {
-  constructor(props: CompProps) {
-    super(props);
-    this.state = { isBurgerOpen: false };
-  }
+  state = { isBurgerOpen: false };
 
   handleBurgerAction(e: SyntheticEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
