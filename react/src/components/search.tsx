@@ -8,16 +8,16 @@ type SearchState = {
 export default class Search extends Component<CompProps, SearchState> {
   state = { keyword: localStorage.getItem('keyword') || '' };
 
-  handleSearch(e: SyntheticEvent<HTMLInputElement, MouseEvent>) {
+  handleSearch = (e: SyntheticEvent<HTMLInputElement, MouseEvent>) => {
     e.preventDefault;
-  }
+  };
 
-  handleChange(e: ChangeEvent<HTMLInputElement>) {
+  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault;
     const keyword = e.target.value;
     localStorage.setItem('keyword', keyword);
     this.setState({ keyword });
-  }
+  };
 
   render() {
     return (
@@ -29,13 +29,9 @@ export default class Search extends Component<CompProps, SearchState> {
             type="text"
             name="keyword"
             value={this.state.keyword}
-            onChange={(e) => this.handleChange(e)}
+            onChange={this.handleChange}
           />
-          <input
-            type="button"
-            value="Search"
-            onClick={(e) => this.handleSearch(e)}
-          />
+          <input type="button" value="Search" onClick={this.handleSearch} />
         </form>
       </section>
     );

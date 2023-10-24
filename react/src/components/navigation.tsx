@@ -8,10 +8,10 @@ type NavState = {
 export default class Navigation extends Component<CompProps, NavState> {
   state = { isBurgerOpen: false };
 
-  handleBurgerAction(e: SyntheticEvent<HTMLButtonElement, MouseEvent>) {
+  handleBurgerAction = (e: SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     this.setState({ isBurgerOpen: !this.state.isBurgerOpen });
-  }
+  };
 
   render() {
     return (
@@ -32,7 +32,7 @@ export default class Navigation extends Component<CompProps, NavState> {
             <button
               className="cursor-pointer leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block md:hidden outline-none focus:outline-none"
               type="button"
-              onClick={(e) => this.handleBurgerAction(e)}
+              onClick={this.handleBurgerAction}
             >
               <img
                 src="/menu.svg"

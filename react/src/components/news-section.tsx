@@ -9,6 +9,10 @@ export default class NewsSection extends Component<CompProps, NewsState> {
   state = { news: 'Loading news' };
 
   render() {
-    return <div>{this.state.news}</div>;
+    return (
+      <div>
+        <img src="/spinner.gif" alt="Loading..." width={100} />
+      </div>
+    );
   }
 }
