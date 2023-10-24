@@ -1,7 +1,14 @@
 import { Component } from 'react';
+import Navigation from './components/navigation';
 
 export default class App extends Component {
   render() {
-    return <div>Hello world!</div>;
+    return (
+      <div className="">
+        <Navigation />
+        {/* <Search /> */}
+        {/* <News /> */}
+      </div>
+    );
   }
 }
