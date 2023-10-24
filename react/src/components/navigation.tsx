@@ -1,15 +1,12 @@
-import { Component, ReactNode, SyntheticEvent } from 'react';
-
-interface NavProps {
-  children?: ReactNode;
-}
+import { Component, SyntheticEvent } from 'react';
+import { CompProps } from '../types';
 
 type NavState = {
   isBurgerOpen: boolean;
 };
 
-export default class Navigation extends Component<NavProps, NavState> {
-  constructor(props: NavProps) {
+export default class Navigation extends Component<CompProps, NavState> {
+  constructor(props: CompProps) {
     super(props);
     this.state = { isBurgerOpen: false };
   }
@@ -56,8 +53,10 @@ export default class Navigation extends Component<NavProps, NavState> {
             }
             data-testid="nav"
           >
-            <ul className="flex flex-col md:flex-row list-none md:ml-auto font-serif text-white	text-base">
-              <a href="/">Main Page</a>
+            <ul className="flex flex-col md:flex-row list-none md:ml-auto font-serif text-white	text-xl	">
+              <a href="/">
+                <li>Main Page</li>
+              </a>
             </ul>
           </div>
         </div>
