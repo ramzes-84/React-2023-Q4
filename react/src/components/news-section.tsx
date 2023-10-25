@@ -9,23 +9,33 @@ type NewsState = {
   isLoading: boolean;
 };
 
-const params: RequestParams = {
-  limit: 10,
-  sort: Sort.Newest,
-  page: 1,
-  keyword: '',
-};
+interface NewsProps extends CompProps {
+  keyword: string;
+}
 
-export default class NewsSection extends Component<CompProps, NewsState> {
+export default class NewsSection extends Component<NewsProps, NewsState> {
   state: NewsState = { news: [], isLoading: true };
+  params: RequestParams = {
+    limit: 10,
+    sort: Sort.Newest,
+    page: 1,
+    keyword: this.props.keyword,
+  };
 
   componentDidMount = async () => {
     const apiService = new ApiService();
-    const newsArr: ArticleInCatalog[] = await apiService.getNews(params);
-    const newsCards = newsArr.map((article) => (
-      <ArticleCard key={article.id} article={article} />
-    ));
-    this.setState({ news: newsCards, isLoading: false });
+    const newsArr: ArticleInCatalog[] = await apiService.getNews(this.params);
+    if (newsArr.length > 0) {
+      const newsCards = newsArr.map((article) => (
+        <ArticleCard key={article.id} article={article} />
+      ));
+      this.setState({ news: newsCards, isLoading: false });
+    } else {
+      this.setState({
+        news: [<p key="nothing">Nothing was found</p>],
+        isLoading: false,
+      });
+    }
   };
 
   render() {
