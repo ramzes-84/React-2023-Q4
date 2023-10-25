@@ -34,3 +34,11 @@ export type ArticleInCatalog = {
   pillarId: string;
   pillarName: string;
 };
+
+export type ContextType = {
+  params: RequestParams;
+};
+
+export type AppState = {
+  keyword: string;
+};
