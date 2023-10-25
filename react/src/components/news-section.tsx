@@ -32,7 +32,9 @@ export default class NewsSection extends Component<CompProps, NewsState> {
     return (
       <>
         {this.state.isLoading && <Spinner />}
-        <main>{this.state.news}</main>
+        <main className="flex flex-wrap gap-3 justify-center">
+          {this.state.news}
+        </main>
       </>
     );
   }

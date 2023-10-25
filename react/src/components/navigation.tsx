@@ -52,7 +52,10 @@ export default class Navigation extends Component<CompProps, NavState> {
           >
             <ul className="flex flex-col md:flex-row list-none md:ml-auto font-serif text-white	text-xl	">
               <a href="/">
-                <li>Main Page</li>
+                <li className="m-2">Main Page</li>
+              </a>
+              <a href="/">
+                <li className="m-2">Throw error</li>
               </a>
             </ul>
           </div>
