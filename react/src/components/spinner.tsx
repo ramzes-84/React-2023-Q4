@@ -2,6 +2,10 @@ import { Component } from 'react';
 
 export default class Spinner extends Component {
   render() {
-    return <img src="/spinner.gif" alt="Loading..." width={100} />;
+    return (
+      <div className="self-center">
+        <img src="/spinner.gif" alt="Loading..." width={200} />
+      </div>
+    );
   }
 }

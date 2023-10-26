@@ -50,14 +50,17 @@ export default class Navigation extends Component<CompProps, NavState> {
             }
             data-testid="nav"
           >
-            <ul className="flex flex-col md:flex-row list-none md:ml-auto font-serif text-white	text-xl	">
-              <a href="/">
-                <li className="m-2">Main Page</li>
-              </a>
-              <a href="/">
-                <li className="m-2">Throw error</li>
-              </a>
-            </ul>
+            <div className="flex flex-col md:flex-row list-none md:ml-auto font-serif text-white	text-xl	">
+              <button className="m-2">Main Page</button>
+              <button
+                className="m-2"
+                onClick={() => {
+                  throw new Error('Manually envoked error');
+                }}
+              >
+                Throw error
+              </button>
+            </div>
           </div>
         </div>
       </nav>

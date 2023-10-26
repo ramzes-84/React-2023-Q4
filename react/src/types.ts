@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
-export interface CompProps {
+export interface AppProps {
   children?: ReactNode;
 }
 
@@ -41,4 +41,6 @@ export type ContextType = {
 
 export type AppState = {
   keyword: string;
+  isLoading: boolean;
+  news: ReactElement[];
 };
