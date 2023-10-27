@@ -4,7 +4,6 @@ import Search from './components/search';
 import NewsSection from './components/news-section';
 import { AppProps, AppState, ArticleInCatalog } from './types';
 import { ApiService } from './service/apiService';
-import ArticleCard from './components/article-card';
 import Spinner from './components/spinner';
 
 export default class App extends Component<AppProps, AppState> {
@@ -23,17 +22,7 @@ export default class App extends Component<AppProps, AppState> {
     this.setState({ isLoading: true, keyword: word });
     const apiService = new ApiService();
     const newsArr: ArticleInCatalog[] = await apiService.getNews(word);
-    if (newsArr.length > 0) {
-      const newsCards = newsArr.map((article) => (
-        <ArticleCard key={article.id} article={article} />
-      ));
-      this.setState({ isLoading: false, news: newsCards });
-    } else {
-      this.setState({
-        isLoading: false,
-        news: [<p key="nothing">Nothing was found</p>],
-      });
-    }
+    this.setState({ isLoading: false, news: newsArr });
   };
 
   setKeyword = (word: string) => {
