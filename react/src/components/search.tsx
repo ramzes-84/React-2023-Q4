@@ -14,7 +14,7 @@ export default class Search extends Component<SearchProps, SearchState> {
   state: SearchState = { keyword: this.props.word };
 
   handleSearch = () => {
-    this.props.keywordCallback(this.state.keyword);
+    this.props.keywordCallback(this.state.keyword.trim());
   };
 
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -23,7 +23,7 @@ export default class ArticleCard extends Component<ArticleCardProps> {
             src={this.props.article.fields.thumbnail || '/no-image.png'}
             alt="photo"
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col p-2">
             <h2 className="p-1 text-lg text-blue-950 underline underline-offset-2">
               {this.props.article.webTitle}
             </h2>
