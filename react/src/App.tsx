@@ -18,6 +18,10 @@ export default class App extends Component<AppProps, AppState> {
     this.fetchNews(this.state.keyword);
   };
 
+  componentDidUpdate = () => {
+    if (this.state.errorMsg) throw new Error('Manually envoked error');
+  };
+
   fetchNews = async (word: string) => {
     this.setState({ isLoading: true, keyword: word });
     const apiService = new ApiService();
@@ -48,7 +52,7 @@ export default class App extends Component<AppProps, AppState> {
         <button
           className="m-2 p-2 text-white	bg-red-600 rounded-2xl"
           onClick={() => {
-            throw new Error('Manually envoked error');
+            this.setState({ errorMsg: 'Manually envoked error' });
           }}
         >
           Throw error

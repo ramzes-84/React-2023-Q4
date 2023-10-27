@@ -15,12 +15,11 @@ export default class NewsSection extends Component<NewsProps> {
       return (
         <main className="flex flex-wrap gap-3 justify-center">{newsCards}</main>
       );
-    } else {
-      return (
-        <main className="flex flex-wrap gap-3 justify-center">
-          Nothing was found
-        </main>
-      );
     }
+    return (
+      <main className="flex flex-wrap gap-3 justify-center">
+        Nothing was found
+      </main>
+    );
   }
 }
