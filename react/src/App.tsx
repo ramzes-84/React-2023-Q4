@@ -2,13 +2,13 @@ import { Component } from 'react';
 import Navigation from './components/navigation';
 import Search from './components/search';
 import NewsSection from './components/news-section';
-import { AppProps, AppState, ArticleInCatalog } from './types';
+import { AppProps, AppState, ArticleInCatalog, StorageValues } from './types';
 import { ApiService } from './service/apiService';
 import Spinner from './components/spinner';
 
 export default class App extends Component<AppProps, AppState> {
   state: AppState = {
-    keyword: localStorage.getItem('keyword') || '',
+    keyword: localStorage.getItem(StorageValues.Keyword) || '',
     isLoading: true,
     errorMsg: null,
     news: [],
@@ -29,7 +29,7 @@ export default class App extends Component<AppProps, AppState> {
     this.setState({
       keyword: word,
     });
-    localStorage.setItem('keyword', word);
+    localStorage.setItem(StorageValues.Keyword, word);
     this.fetchNews(word);
   };
 

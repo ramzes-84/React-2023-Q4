@@ -45,3 +45,7 @@ export type AppState = {
   news: ArticleInCatalog[];
   errorMsg: null | string;
 };
+
+export enum StorageValues {
+  Keyword = 'keyword',
+}
