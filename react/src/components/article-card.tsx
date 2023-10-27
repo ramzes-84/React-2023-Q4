@@ -15,18 +15,24 @@ export default class ArticleCard extends Component<ArticleCardProps> {
 
   render() {
     return (
-      <a
-        href={this.articleLink}
-        className="inline-block max-w-xs	border-2 rounded-2xl border-purple-500 overflow-hidden"
-      >
-        <img
-          width={320}
-          height={144}
-          src={this.props.article.fields.thumbnail || '/no-image.png'}
-          alt="photo"
-        />
-        <h4 className="p-1">{this.props.article.webTitle}</h4>
-        <p className="p-1">Category: {this.props.article.sectionName}</p>
+      <a href={this.props.article.webUrl} target="_blank" rel="noreferrer">
+        <div className="flex flex-row border-2 rounded-2xl border-purple-500 overflow-hidden">
+          <img
+            width={320}
+            height={144}
+            src={this.props.article.fields.thumbnail || '/no-image.png'}
+            alt="photo"
+          />
+          <div className="flex flex-col">
+            <h2 className="p-1 text-lg text-blue-950 underline underline-offset-2">
+              {this.props.article.webTitle}
+            </h2>
+            <p className="grow p-1 italic">
+              {this.props.article.fields.trailText}
+            </p>
+            <p className="p-1">Category: {this.props.article.sectionName}</p>
+          </div>
+        </div>
       </a>
     );
   }

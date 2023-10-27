@@ -21,6 +21,7 @@ export type ArticleInCatalog = {
   fields: {
     body: string;
     thumbnail: string;
+    trailText: string;
   };
   id: string;
   type: string;

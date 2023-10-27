@@ -12,14 +12,8 @@ export default class NewsSection extends Component<NewsProps> {
       const newsCards = this.props.newsBatch.map((article) => (
         <ArticleCard key={article.id} article={article} />
       ));
-      return (
-        <main className="flex flex-wrap gap-3 justify-center">{newsCards}</main>
-      );
+      return <main className="flex flex-col gap-3 m-2">{newsCards}</main>;
     }
-    return (
-      <main className="flex flex-wrap gap-3 justify-center">
-        Nothing was found
-      </main>
-    );
+    return <main className="text-center">Nothing was found</main>;
   }
 }
