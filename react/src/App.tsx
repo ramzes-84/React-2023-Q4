@@ -11,27 +11,18 @@ export default class App extends Component<AppProps, AppState> {
   state: AppState = {
     keyword: localStorage.getItem('keyword') || '',
     isLoading: true,
+    errorMsg: null,
     news: [],
   };
 
   componentDidMount = () => {
-    this.fetchNews();
+    this.fetchNews(this.state.keyword);
   };
 
-  setKeyword = () => {
-    this.setState({
-      keyword: localStorage.getItem('keyword') || '',
-      news: [],
-    });
-    this.fetchNews();
-  };
-
-  fetchNews = async () => {
-    this.setState({ isLoading: true });
+  fetchNews = async (word: string) => {
+    this.setState({ isLoading: true, keyword: word });
     const apiService = new ApiService();
-    const newsArr: ArticleInCatalog[] = await apiService.getNews(
-      this.state.keyword
-    );
+    const newsArr: ArticleInCatalog[] = await apiService.getNews(word);
     if (newsArr.length > 0) {
       const newsCards = newsArr.map((article) => (
         <ArticleCard key={article.id} article={article} />
@@ -45,18 +36,34 @@ export default class App extends Component<AppProps, AppState> {
     }
   };
 
+  setKeyword = (word: string) => {
+    this.setState({
+      keyword: word,
+    });
+    localStorage.setItem('keyword', word);
+    this.fetchNews(word);
+  };
+
   render() {
     return (
       <section className="flex flex-col items-stretch">
         <Navigation />
         <Search
           word={this.state.keyword}
-          keywordCallback={() => {
-            this.setKeyword();
+          keywordCallback={(word) => {
+            this.setKeyword(word);
           }}
         />
         {this.state.isLoading && <Spinner />}
-        <NewsSection newsBatch={this.state.news} />
+        {!this.state.isLoading && <NewsSection newsBatch={this.state.news} />}
+        <button
+          className="m-2 p-2 text-white	bg-red-600 rounded-2xl"
+          onClick={() => {
+            throw new Error('Manually envoked error');
+          }}
+        >
+          Throw error
+        </button>
       </section>
     );
   }

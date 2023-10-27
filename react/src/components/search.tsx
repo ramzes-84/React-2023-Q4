@@ -3,7 +3,7 @@ import { AppProps } from '../types';
 
 interface SearchProps extends AppProps {
   word: string;
-  keywordCallback: () => void;
+  keywordCallback: (word: string) => void;
 }
 
 type SearchState = {
@@ -14,13 +14,12 @@ export default class Search extends Component<SearchProps, SearchState> {
   state: SearchState = { keyword: this.props.word };
 
   handleSearch = () => {
-    this.props.keywordCallback();
+    this.props.keywordCallback(this.state.keyword);
   };
 
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newKeyword = e.target.value;
     this.setState({ keyword: newKeyword });
-    localStorage.setItem('keyword', newKeyword);
   };
 
   render() {

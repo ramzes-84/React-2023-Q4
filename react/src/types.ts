@@ -43,4 +43,5 @@ export type AppState = {
   keyword: string;
   isLoading: boolean;
   news: ReactElement[];
+  errorMsg: null | string;
 };

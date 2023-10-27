@@ -1,11 +1,11 @@
 import { Component, SyntheticEvent } from 'react';
-import { CompProps } from '../types';
+import { AppProps } from '../types';
 
 type NavState = {
   isBurgerOpen: boolean;
 };
 
-export default class Navigation extends Component<CompProps, NavState> {
+export default class Navigation extends Component<AppProps, NavState> {
   state: NavState = { isBurgerOpen: false };
 
   handleBurgerAction = (e: SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
@@ -20,7 +20,9 @@ export default class Navigation extends Component<CompProps, NavState> {
           <div className="w-full relative flex justify-between md:w-auto md:static md:block md:justify-start">
             <a
               className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
-              href="/"
+              target="_blank"
+              href="https://open-platform.theguardian.com/documentation/"
+              rel="noreferrer"
             >
               <img
                 src="https://open-platform.theguardian.com/public/img/theguardian-op-logo.svg"
@@ -52,14 +54,6 @@ export default class Navigation extends Component<CompProps, NavState> {
           >
             <div className="flex flex-col md:flex-row list-none md:ml-auto font-serif text-white	text-xl	">
               <button className="m-2">Main Page</button>
-              <button
-                className="m-2"
-                onClick={() => {
-                  throw new Error('Manually envoked error');
-                }}
-              >
-                Throw error
-              </button>
             </div>
           </div>
         </div>
