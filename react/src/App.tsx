@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Navigation from './components/navigation';
-import Search from './components/search';
+import { Search } from './components/search';
 import NewsSection from './components/news-section';
 import { AppProps, AppState, ArticleInCatalog, StorageValues } from './types';
 import { ApiService } from './service/apiService';

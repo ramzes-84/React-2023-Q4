@@ -1,42 +1,30 @@
-import { ChangeEvent, Component } from 'react';
-import { AppProps } from '../types';
+import { useState } from 'react';
 
-interface SearchProps extends AppProps {
+interface SearchProps {
   word: string;
   keywordCallback: (word: string) => void;
 }
 
-type SearchState = {
-  keyword: string;
-};
+export function Search({ word, keywordCallback }: SearchProps) {
+  const [keyword, setKeyword] = useState(word);
 
-export default class Search extends Component<SearchProps, SearchState> {
-  state: SearchState = { keyword: this.props.word };
-
-  handleSearch = () => {
-    this.props.keywordCallback(this.state.keyword.trim());
-  };
-
-  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newKeyword = e.target.value;
-    this.setState({ keyword: newKeyword });
-  };
-
-  render() {
-    return (
-      <section className="rounded-2xl bg-slate-500 text-white m-2 p-2">
-        <div className="flex justify-center gap-2">
-          <input
-            placeholder="football?"
-            className="text-black px-1 rounded"
-            type="text"
-            name="keyword"
-            value={this.state.keyword}
-            onChange={this.handleChange}
-          />
-          <input type="button" value="Search" onClick={this.handleSearch} />
-        </div>
-      </section>
-    );
-  }
+  return (
+    <section className="rounded-2xl bg-slate-500 text-white m-2 p-2">
+      <div className="flex justify-center gap-2">
+        <input
+          placeholder="Autosearch: enter 3 or more letters"
+          className="text-black px-1 rounded"
+          type="text"
+          name="keyword"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+        />
+        <input
+          type="button"
+          value="Search"
+          onClick={() => keywordCallback(keyword)}
+        />
+      </div>
+    </section>
+  );
 }
