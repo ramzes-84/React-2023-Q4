@@ -40,7 +40,6 @@ export function Navigation() {
             'md:flex flex-grow items-center' +
             (isBurgerOpen ? ' flex' : ' hidden')
           }
-          data-testid="nav"
         >
           <div className="flex flex-col md:flex-row list-none md:ml-auto font-serif text-white	text-xl	">
             <button className="m-2" onClick={toggleBurger}>
