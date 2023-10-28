@@ -1,19 +1,16 @@
-import { Component } from 'react';
-import { AppProps, ArticleInCatalog } from '../types';
-import ArticleCard from './article-card';
+import { ArticleInCatalog } from '../types';
+import { ArticleCard } from './article-card';
 
-interface NewsProps extends AppProps {
+interface NewsProps {
   newsBatch: ArticleInCatalog[];
 }
 
-export default class NewsSection extends Component<NewsProps> {
-  render() {
-    if (this.props.newsBatch.length > 0) {
-      const newsCards = this.props.newsBatch.map((article) => (
-        <ArticleCard key={article.id} article={article} />
-      ));
-      return <main className="flex flex-col gap-3 m-2">{newsCards}</main>;
-    }
-    return <main className="text-center">Nothing was found</main>;
+export function NewsSection({ newsBatch }: NewsProps) {
+  if (newsBatch.length > 0) {
+    const newsCards = newsBatch.map((article) => (
+      <ArticleCard key={article.id} article={article} />
+    ));
+    return <main className="flex flex-col gap-3 m-2">{newsCards}</main>;
   }
+  return <main className="text-center">Nothing was found</main>;
 }

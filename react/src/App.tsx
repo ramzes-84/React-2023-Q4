@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import { Search } from './components/search';
-import NewsSection from './components/news-section';
+import { NewsSection } from './components/news-section';
 import { AppProps, AppState, ArticleInCatalog, StorageValues } from './types';
 import { ApiService } from './service/apiService';
-import Spinner from './components/spinner';
+import { Spinner } from './components/spinner';
 import { Navigation } from './components/navigation';
 
 export default class App extends Component<AppProps, AppState> {
