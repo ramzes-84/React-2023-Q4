@@ -12,7 +12,7 @@ export function Search({ word, keywordCallback }: SearchProps) {
     <section className="rounded-2xl bg-slate-500 text-white m-2 p-2">
       <div className="flex justify-center gap-2">
         <input
-          placeholder="Autosearch: enter 3 or more letters"
+          placeholder="crocodile?"
           className="text-black px-1 rounded"
           type="text"
           name="keyword"

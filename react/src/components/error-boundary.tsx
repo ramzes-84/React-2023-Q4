@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { AppProps } from '../types';
-import Navigation from './navigation';
+import { Navigation } from './navigation';
 
 type ErrorState = {
   hasError: boolean;
