@@ -41,11 +41,11 @@ export function Navigation() {
             (isBurgerOpen ? ' flex' : ' hidden')
           }
         >
-          <div className="flex flex-col md:flex-row list-none md:ml-auto font-serif text-white	text-xl	">
-            <button className="m-2" onClick={toggleBurger}>
-              Main Page
-            </button>
-          </div>
+          <ul className="flex flex-col md:flex-row list-none md:ml-auto font-serif text-white	text-xl	">
+            <a href="/" onClick={toggleBurger}>
+              <li className="m-2">Main</li>
+            </a>
+          </ul>
         </div>
       </div>
     </nav>
