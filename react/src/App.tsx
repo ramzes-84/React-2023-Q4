@@ -3,7 +3,6 @@ import { NewsSection } from './components/news-section';
 import { ArticleInCatalog, StorageValues } from './types';
 import { ApiService } from './service/apiService';
 import { Spinner } from './components/spinner';
-import { Navigation } from './components/navigation';
 import { useEffect, useState } from 'react';
 
 export default function App() {
@@ -32,7 +31,6 @@ export default function App() {
 
   return (
     <section className="flex flex-col items-stretch">
-      <Navigation />
       <Search word={keyword} keywordCallback={(word) => setKeyword(word)} />
       {isLoading && <Spinner />}
       {!isLoading && <NewsSection newsBatch={news} />}
