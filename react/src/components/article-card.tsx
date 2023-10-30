@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { ArticleInCatalog } from '../types';
 
 interface ArticleCardProps {
@@ -14,15 +15,16 @@ export function ArticleCard({ article }: ArticleCardProps) {
         src={article.fields.thumbnail || '/no-image.png'}
         alt="photo"
       />
-      <div className="flex flex-col p-2">
+      <div className="flex flex-col p-2 grow">
         <h2 className="p-1 text-lg text-blue-950 underline underline-offset-2">
           {article.webTitle}
         </h2>
         <p className="grow p-1 italic">{article.fields.trailText}</p>
         <div className="flex flex-row">
           <p className="p-1 grow">Category: {article.sectionName}</p>
+          <Link to={`/${article.id}`}>Read more</Link>
           <a href={article.webUrl} target="_blank" rel="noreferrer">
-            Read more
+            Guardian
           </a>
         </div>
       </div>

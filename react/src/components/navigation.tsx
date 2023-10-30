@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 export function Navigation() {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
@@ -44,9 +44,9 @@ export function Navigation() {
             }
           >
             <ul className="flex flex-col md:flex-row list-none md:ml-auto font-serif text-white	text-xl	">
-              <a href="/" onClick={toggleBurger}>
+              <Link to={'/'} onClick={toggleBurger}>
                 <li className="m-2">Main</li>
-              </a>
+              </Link>
             </ul>
           </div>
         </div>
