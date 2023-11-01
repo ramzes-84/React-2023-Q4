@@ -5,7 +5,7 @@ const NEWS_ENDPOINT = 'https://content.guardianapis.com/search';
 const ARTICLE_ENDPOINT = 'https://content.guardianapis.com/';
 
 export class ApiService {
-  public async getNews(keyword: string) {
+  public async getNews(keyword: string = '') {
     const url = `${NEWS_ENDPOINT}?q=${keyword}&order-by=${Sort.Newest}&page-size=10&page=1&api-key=${API_KEY}&show-fields=all`;
     const response = await fetch(url);
     if (response.status === 200) {
