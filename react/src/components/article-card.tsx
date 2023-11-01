@@ -22,10 +22,20 @@ export function ArticleCard({ article }: ArticleCardProps) {
         <p className="grow p-1 italic">{article.fields.trailText}</p>
         <div className="flex flex-row">
           <p className="p-1 grow">Category: {article.sectionName}</p>
-          <Link to={`/${article.id}`}>Read more</Link>
-          <a href={article.webUrl} target="_blank" rel="noreferrer">
-            Guardian
-          </a>
+          <p>
+            Read
+            <Link to={`/article/${article.id}`}>
+              <button className="mx-1 px-1 text-white	bg-slate-500 rounded-2xl">
+                here
+              </button>
+            </Link>
+            or
+            <a href={article.webUrl} target="_blank" rel="noreferrer">
+              <button className="mx-1 px-1 text-white	bg-slate-500 rounded-2xl">
+                on Guardian
+              </button>
+            </a>
+          </p>
         </div>
       </div>
     </div>

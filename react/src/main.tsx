@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ErrorPage } from './components/error-page.tsx';
 import { SingleView } from './components/single-view.tsx';
 import { Navigation } from './components/navigation.tsx';
+import { fetchNews, fetchSingleArticle } from './utilities/utils.ts';
 
 const router = createBrowserRouter([
   {
@@ -17,10 +18,14 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <App />,
+        loader: fetchNews,
       },
       {
-        path: ':articleID',
+        path: 'article/*',
         element: <SingleView />,
+        loader: ({ params }) => {
+          return fetchSingleArticle(params['*'] as string);
+        },
       },
     ],
   },
