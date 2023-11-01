@@ -7,7 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ErrorPage } from './components/error-page.tsx';
 import { SingleView } from './components/single-view.tsx';
 import { Navigation } from './components/navigation.tsx';
-import { fetchNews, fetchSingleArticle } from './utilities/utils.ts';
+import { SplitView } from './components/split-view.tsx';
 
 const router = createBrowserRouter([
   {
@@ -18,14 +18,14 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <App />,
-        loader: fetchNews,
+      },
+      {
+        path: 'split/*',
+        element: <SplitView />,
       },
       {
         path: 'article/*',
         element: <SingleView />,
-        loader: ({ params }) => {
-          return fetchSingleArticle(params['*'] as string);
-        },
       },
     ],
   },

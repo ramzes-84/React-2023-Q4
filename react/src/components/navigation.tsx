@@ -7,8 +7,8 @@ export function Navigation() {
 
   return (
     <>
-      <nav className="relative flex flex-wrap items-center justify-between px-2  bg-slate-500	 z-10 drop-shadow-md ">
-        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+      <nav className="relative flex flex-wrap items-center justify-between px-2  bg-slate-500 z-10 drop-shadow-md">
+        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between max-w-4xl">
           <div className="w-full relative flex justify-between md:w-auto md:static md:block md:justify-start">
             <a
               className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"

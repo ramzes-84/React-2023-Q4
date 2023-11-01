@@ -24,14 +24,20 @@ export function ArticleCard({ article }: ArticleCardProps) {
           <p className="p-1 grow">Category: {article.sectionName}</p>
           <p>
             Read
-            <Link to={`/article/${article.id}`}>
-              <button className="mx-1 px-1 text-white	bg-slate-500 rounded-2xl">
+            <Link to={`/split/${article.id}`}>
+              <button className="mx-1 px-1 text-white	bg-slate-500 rounded-md">
                 here
               </button>
             </Link>
             or
+            <Link to={`/article/${article.id}`}>
+              <button className="mx-1 px-1 text-white	bg-slate-500 rounded-md">
+                single
+              </button>
+            </Link>
+            or
             <a href={article.webUrl} target="_blank" rel="noreferrer">
-              <button className="mx-1 px-1 text-white	bg-slate-500 rounded-2xl">
+              <button className="mx-1 px-1 text-white	bg-slate-500 rounded-md">
                 on Guardian
               </button>
             </a>

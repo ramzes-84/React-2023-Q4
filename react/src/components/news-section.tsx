@@ -10,7 +10,11 @@ export function NewsSection({ newsBatch }: NewsProps) {
     const newsCards = newsBatch.map((article) => (
       <ArticleCard key={article.id} article={article} />
     ));
-    return <main className="flex flex-col gap-3 m-2">{newsCards}</main>;
+    return (
+      <main className="flex flex-col gap-3 m-2 max-w-4xl	mx-auto">
+        {newsCards}
+      </main>
+    );
   }
   return <main className="text-center">Nothing was found</main>;
 }

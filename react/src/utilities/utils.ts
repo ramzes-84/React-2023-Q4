@@ -4,11 +4,18 @@ import { Article, ArticleInCatalog } from '../types';
 export async function fetchNews() {
   const apiService = new ApiService();
   const newsArr: ArticleInCatalog[] = await apiService.getNews();
-  return newsArr;
+  return { newsArr };
 }
 
 export async function fetchSingleArticle(id: string) {
   const apiService = new ApiService();
   const article: Article = await apiService.getCurrentArticle(id);
-  return article;
+  return { article };
+}
+
+export async function fetchDataSplitView(id: string) {
+  const apiService = new ApiService();
+  const newsArr: ArticleInCatalog[] = await apiService.getNews();
+  const article: Article = await apiService.getCurrentArticle(id);
+  return { article, newsArr };
 }
