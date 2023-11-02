@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { ArticleInCatalog, RequestParams } from '../types';
 import { ArticleCard } from './article-card';
 import { ApiService } from '../service/apiService';
 import { Spinner } from './spinner';
+import { ArticleQuickView } from './article-quick-view';
 
 interface NewsProps {
   params: RequestParams;
@@ -10,6 +11,16 @@ interface NewsProps {
 
 export function NewsSection({ params }: NewsProps) {
   const [news, setNews] = useState<null | ArticleInCatalog[]>(null);
+  const [quickArticle, setQuickArticle] = useState<null | ReactNode>(null);
+
+  const splitViewCB = (id: string) => {
+    const articleData: ArticleInCatalog | undefined = news?.find(
+      (article) => id === article.id
+    );
+    if (articleData) {
+      setQuickArticle(<ArticleQuickView articleData={articleData} />);
+    } else throw new Error('There is no article with provided ID');
+  };
 
   useEffect(() => {
     async function fetchNews() {
@@ -22,11 +33,18 @@ export function NewsSection({ params }: NewsProps) {
 
   if (news && news.length > 0) {
     const newsCards = news.map((article) => (
-      <ArticleCard key={article.id} article={article} />
+      <ArticleCard
+        key={article.id}
+        article={article}
+        splitViewCB={splitViewCB}
+      />
     ));
     return (
-      <main className="flex flex-col gap-3 m-2 px-2 max-w-4xl mx-auto">
-        {newsCards}
+      <main className="flex flex-row">
+        <section className="flex flex-col gap-3 m-2 px-2 max-w-4xl mx-auto">
+          {newsCards}
+        </section>
+        <section className="max-w-[50%]">{quickArticle}</section>
       </main>
     );
   } else if (news && news.length === 0) {

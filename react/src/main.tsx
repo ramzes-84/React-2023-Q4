@@ -7,7 +7,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ErrorPage } from './components/error-page.tsx';
 import { SingleView } from './components/single-view.tsx';
 import { Navigation } from './components/navigation.tsx';
-import { SplitView } from './components/split-view.tsx';
 
 const router = createBrowserRouter([
   {
@@ -18,10 +17,6 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <App />,
-      },
-      {
-        path: 'split/*',
-        element: <SplitView />,
       },
       {
         path: 'article/*',

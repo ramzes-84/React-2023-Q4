@@ -18,11 +18,7 @@ export enum Sort {
 }
 
 export type ArticleInCatalog = {
-  fields: {
-    body: string;
-    thumbnail: string;
-    trailText: string;
-  };
+  fields: AdditionalFields;
   id: string;
   type: string;
   sectionId: string;
