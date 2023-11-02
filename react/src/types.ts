@@ -5,10 +5,10 @@ export interface AppProps {
 }
 
 export type RequestParams = {
-  limit: number;
-  sort: Sort;
-  page: number;
-  keyword: string;
+  limit: string;
+  sort: string;
+  page: string;
+  q: string;
 };
 
 export enum Sort {
@@ -48,7 +48,7 @@ export type AppState = {
 };
 
 export enum StorageValues {
-  Keyword = 'keyword',
+  Settings = 'settings',
 }
 
 export type Article = {
