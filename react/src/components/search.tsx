@@ -27,7 +27,7 @@ export function Search({ params, paramsCallback }: SearchProps) {
               page: formValues.get(AppUrlParams.Page) as string,
             };
             paramsCallback(newParams);
-          }
+          } else throw new Error('The form isn`t complete');
         }}
       >
         <input
