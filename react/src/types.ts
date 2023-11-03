@@ -17,6 +17,13 @@ export enum Sort {
   Relevance = 'relevance',
 }
 
+export enum AppUrlParams {
+  Query = 'q',
+  Limit = 'limit',
+  Page = 'page',
+  Sort = 'sort',
+}
+
 export type ArticleInCatalog = {
   fields: AdditionalFields;
   id: string;

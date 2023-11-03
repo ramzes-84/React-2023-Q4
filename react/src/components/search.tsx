@@ -1,21 +1,33 @@
-import { useRef } from 'react';
-import { Form } from 'react-router-dom';
-import { StorageValues } from '../types';
+import { AppUrlParams, RequestParams } from '../types';
 
-// interface SearchProps {
-//   params: object;
-//   paramsCallback: (params: object) => void;
-// }
+interface SearchProps {
+  params: RequestParams;
+  paramsCallback: (params: RequestParams) => void;
+}
 
-export function Search() {
-  const searchInput = useRef(null);
-
+export function Search({ params, paramsCallback }: SearchProps) {
   return (
     <section className="rounded-2xl bg-slate-500 text-white m-2 p-2">
-      <Form
-        className="flex justify-center gap-2"
-        onSubmit={() => {
-          // console.log(e.target.sort.value);
+      <form
+        id="searchForm"
+        className="flex justify-center gap-2 flex-wrap"
+        onSubmit={(e) => {
+          e.preventDefault();
+          const formValues = new FormData(e.target as HTMLFormElement);
+          if (
+            formValues.has(AppUrlParams.Limit) &&
+            formValues.has(AppUrlParams.Query) &&
+            formValues.has(AppUrlParams.Sort) &&
+            formValues.has(AppUrlParams.Page)
+          ) {
+            const newParams: RequestParams = {
+              limit: formValues.get(AppUrlParams.Limit) as string,
+              q: formValues.get(AppUrlParams.Query) as string,
+              sort: formValues.get(AppUrlParams.Sort) as string,
+              page: formValues.get(AppUrlParams.Page) as string,
+            };
+            paramsCallback(newParams);
+          }
         }}
       >
         <input
@@ -23,13 +35,12 @@ export function Search() {
           className="text-black px-1 rounded"
           type="text"
           name="q"
-          defaultValue={localStorage.getItem(StorageValues.Keyword) || ''}
+          defaultValue={params.q}
         />
         <select
-          ref={searchInput}
           className="text-black px-1 rounded"
           name="limit"
-          defaultValue="10"
+          defaultValue={params.limit}
         >
           <option value="10">10 items per page</option>
           <option value="20">20 items per page</option>
@@ -37,14 +48,14 @@ export function Search() {
         <select
           className="text-black px-1 rounded"
           name="sort"
-          defaultValue="newest"
+          defaultValue={params.sort}
         >
           <option value="newest">Show newest first</option>
           <option value="oldest">Show oldest first</option>
           <option value="relevance">Sort by relevance</option>
         </select>
         <input type="submit" value="Search" />
-      </Form>
+      </form>
     </section>
   );
 }
