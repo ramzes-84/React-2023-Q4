@@ -1,12 +1,18 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Article } from '../types';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Spinner } from './spinner';
 import { ApiService } from '../service/apiService';
+import { CloseBtn } from './close-btn';
 
 export const SingleView = () => {
   const params = useParams();
   const [article, setArticle] = useState<null | Article>(null);
+  const ref = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    ref?.current?.scrollIntoView({ behavior: 'smooth' });
+  });
 
   useEffect(() => {
     async function fetchNews() {
@@ -24,7 +30,13 @@ export const SingleView = () => {
 
     return (
       <>
-        <article className="flex flex-col	items-center p-3 max-w-4xl mx-auto">
+        <Link to={'/'}>
+          <CloseBtn />
+        </Link>
+        <article
+          ref={ref}
+          className="flex flex-col	items-center p-3 max-w-4xl mx-auto"
+        >
           <h1 className="underline-offset-1	m-2 text-center	text-sky-900 font-extrabold	text-xl">
             {article.webTitle}
           </h1>
@@ -38,9 +50,12 @@ export const SingleView = () => {
             src={article.fields.thumbnail || '/no-image.png'}
             width={420}
             height={250}
-            alt=""
+            alt={article.webTitle}
           />
-          <div dangerouslySetInnerHTML={{ __html: article.fields.body }} />
+          <div
+            className="overflow-auto"
+            dangerouslySetInnerHTML={{ __html: article.fields.body }}
+          />
         </article>
       </>
     );

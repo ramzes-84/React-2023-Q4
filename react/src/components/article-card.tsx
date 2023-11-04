@@ -3,10 +3,9 @@ import { ArticleInCatalog } from '../types';
 
 interface ArticleCardProps {
   article: ArticleInCatalog;
-  splitViewCB: (id: string) => void;
 }
 
-export function ArticleCard({ article, splitViewCB }: ArticleCardProps) {
+export function ArticleCard({ article }: ArticleCardProps) {
   return (
     <div className="flex flex-row border rounded-2xl border-slate-500 overflow-hidden">
       <img
@@ -25,14 +24,11 @@ export function ArticleCard({ article, splitViewCB }: ArticleCardProps) {
           <p className="p-1 grow">Category: {article.sectionName}</p>
           <p>
             Read
-            <button
-              className="mx-1 px-1 text-white	bg-slate-500 rounded-md"
-              onClick={() => {
-                splitViewCB(article.id);
-              }}
-            >
-              here
-            </button>
+            <Link to={`/split/${article.id}`}>
+              <button className="mx-1 px-1 text-white	bg-slate-500 rounded-md">
+                here
+              </button>
+            </Link>
             /
             <Link to={`/article/${article.id}`}>
               <button className="mx-1 px-1 text-white	bg-slate-500 rounded-md">

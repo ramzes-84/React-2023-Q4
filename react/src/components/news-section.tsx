@@ -1,29 +1,16 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArticleInCatalog, RequestParams } from '../types';
 import { ArticleCard } from './article-card';
 import { ApiService } from '../service/apiService';
 import { Spinner } from './spinner';
-import { ArticleQuickView } from './article-quick-view';
-import { CloseBtn } from './close-btn';
+import { Outlet } from 'react-router-dom';
 
 interface NewsProps {
   params: RequestParams;
 }
 
 export function NewsSection({ params }: NewsProps) {
-  const singleArticleRef = useRef<HTMLElement | null>(null);
   const [news, setNews] = useState<null | ArticleInCatalog[]>(null);
-  const [quickArticle, setQuickArticle] = useState<null | ReactNode>(null);
-
-  const splitViewCB = (id: string) => {
-    const articleData: ArticleInCatalog | undefined = news?.find(
-      (article) => id === article.id
-    );
-    if (articleData) {
-      setQuickArticle(<ArticleQuickView articleData={articleData} />);
-    } else throw new Error('There is no article with provided ID');
-    singleArticleRef?.current?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   useEffect(() => {
     async function fetchNews() {
@@ -36,22 +23,15 @@ export function NewsSection({ params }: NewsProps) {
 
   if (news && news.length > 0) {
     const newsCards = news.map((article) => (
-      <ArticleCard
-        key={article.id}
-        article={article}
-        splitViewCB={splitViewCB}
-      />
+      <ArticleCard key={article.id} article={article} />
     ));
     return (
       <main className="flex flex-row">
         <section className="flex flex-col gap-3 m-2 px-2 max-w-4xl mx-auto">
           {newsCards}
         </section>
-        <section className="flex flex-col max-w-[50%]" ref={singleArticleRef}>
-          {quickArticle && (
-            <CloseBtn paramsCallback={() => setQuickArticle(null)} />
-          )}
-          {quickArticle}
+        <section className="max-w-[50%]">
+          <Outlet />
         </section>
       </main>
     );

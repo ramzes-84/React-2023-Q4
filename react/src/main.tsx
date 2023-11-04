@@ -17,6 +17,12 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <App />,
+        children: [
+          {
+            path: 'split/*',
+            element: <SingleView />,
+          },
+        ],
       },
       {
         path: 'article/*',

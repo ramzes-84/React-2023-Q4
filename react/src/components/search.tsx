@@ -6,28 +6,31 @@ interface SearchProps {
 }
 
 export function Search({ params, paramsCallback }: SearchProps) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formValues = new FormData(e.target as HTMLFormElement);
+    if (
+      formValues.has(AppUrlParams.Limit) &&
+      formValues.has(AppUrlParams.Query) &&
+      formValues.has(AppUrlParams.Sort)
+    ) {
+      const newParams: RequestParams = {
+        limit: formValues.get(AppUrlParams.Limit) as string,
+        q: formValues.get(AppUrlParams.Query) as string,
+        sort: formValues.get(AppUrlParams.Sort) as string,
+        page: '1',
+      };
+      paramsCallback(newParams);
+    } else throw new Error('The form isn`t complete');
+  };
+
   return (
     <section className="rounded-2xl bg-slate-500 text-white m-2 p-2">
       <form
         id="searchForm"
         className="flex justify-center gap-2 flex-wrap"
         onSubmit={(e) => {
-          e.preventDefault();
-          const formValues = new FormData(e.target as HTMLFormElement);
-          if (
-            formValues.has(AppUrlParams.Limit) &&
-            formValues.has(AppUrlParams.Query) &&
-            formValues.has(AppUrlParams.Sort) &&
-            formValues.has(AppUrlParams.Page)
-          ) {
-            const newParams: RequestParams = {
-              limit: formValues.get(AppUrlParams.Limit) as string,
-              q: formValues.get(AppUrlParams.Query) as string,
-              sort: formValues.get(AppUrlParams.Sort) as string,
-              page: formValues.get(AppUrlParams.Page) as string,
-            };
-            paramsCallback(newParams);
-          } else throw new Error('The form isn`t complete');
+          handleSubmit(e);
         }}
       >
         <input
