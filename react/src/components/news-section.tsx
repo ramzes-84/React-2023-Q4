@@ -3,7 +3,7 @@ import { ArticleInCatalog, ArticlesResponse, RequestParams } from '../types';
 import { ArticleCard } from './article-card';
 import { ApiService } from '../service/apiService';
 import { Spinner } from './spinner';
-import { Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import { Pagination } from './pagination';
 
 interface NewsProps {
@@ -33,7 +33,7 @@ export function NewsSection({ params, paramsCallback }: NewsProps) {
     ));
     return (
       <>
-        <main className="flex flex-row">
+        <main className="flex flex-row relative">
           <section
             className={
               'flex flex-col gap-3 m-2 px-2 mx-auto ' +
@@ -42,6 +42,14 @@ export function NewsSection({ params, paramsCallback }: NewsProps) {
           >
             {newsCards}
           </section>
+          <Link
+            to={'/'}
+            className={
+              isSplitView
+                ? 'absolute w-[50%] h-[100%] left-0 top-0 bg-slate-950/20 cursor-ew-resize'
+                : 'hidden'
+            }
+          />
           <section className={isSplitView ? 'w-[50%]' : 'hidden'}>
             <Outlet />
           </section>
