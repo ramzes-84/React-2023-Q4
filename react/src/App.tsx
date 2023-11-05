@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { Pagination } from './components/pagination';
 import { useSearchParams } from 'react-router-dom';
 import { paramsCreator } from './utils/params-creator';
+import { ErrorThrower } from './components/error-thrower';
 
 export default function App() {
   const savedParams = JSON.parse(
@@ -30,12 +31,7 @@ export default function App() {
       <Search params={params} paramsCallback={setParams} />
       <NewsSection params={params} />
       <Pagination params={params} paramsCallback={setParams} />
-      <button
-        className="m-2 p-2 text-white	bg-red-600 rounded-2xl"
-        onClick={() => setErrorMsg('Manually envoked error')}
-      >
-        Throw error
-      </button>
+      <ErrorThrower callback={() => setErrorMsg('Manually envoked error')} />
     </section>
   );
 }
