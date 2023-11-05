@@ -24,7 +24,7 @@ export function Pagination({
 
   const { firstPage, middleSegment, lastPage } = paginationMapper(
     +params.page,
-    totalPages
+    totalPages > 500 ? 500 : totalPages
   );
 
   const firstPageBtn = firstPage ? (
