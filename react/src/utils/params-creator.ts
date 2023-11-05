@@ -1,4 +1,4 @@
-import { RequestParams, AppUrlParams, Sort } from '../types';
+import { RequestParams, AppUrlParams, Sort, PageLimitValue } from '../types';
 
 export const paramsCreator = (
   savedParams: RequestParams,
@@ -8,11 +8,13 @@ export const paramsCreator = (
     [AppUrlParams.Query]:
       urlParams.get(AppUrlParams.Query) || savedParams?.q || '',
     [AppUrlParams.Limit]:
-      urlParams.get(AppUrlParams.Limit) || savedParams?.limit || '10',
+      urlParams.get(AppUrlParams.Limit) ||
+      (savedParams?.limit as PageLimitValue) ||
+      PageLimitValue.ten,
     [AppUrlParams.Page]:
       urlParams.get(AppUrlParams.Page) || savedParams?.page || '1',
     [AppUrlParams.Sort]:
       urlParams.get(AppUrlParams.Sort) || savedParams?.sort || Sort.Newest,
   };
-  return appParams;
+  return appParams as RequestParams;
 };

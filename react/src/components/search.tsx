@@ -1,4 +1,5 @@
-import { AppUrlParams, RequestParams } from '../types';
+import { ChangeEvent, useState } from 'react';
+import { AppUrlParams, PageLimitValue, RequestParams, Sort } from '../types';
 
 interface SearchProps {
   params: RequestParams;
@@ -6,6 +7,18 @@ interface SearchProps {
 }
 
 export function Search({ params, paramsCallback }: SearchProps) {
+  const [itemsPerPage, setItemsPerPage] = useState<PageLimitValue>(
+    params.limit
+  );
+  const handleLimitChanging = (e: ChangeEvent<HTMLSelectElement>) => {
+    const newParams = {
+      ...params,
+      limit: e.target.value as PageLimitValue,
+      page: '1',
+    };
+    paramsCallback(newParams);
+    setItemsPerPage(e.target.value as PageLimitValue);
+  };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formValues = new FormData(e.target as HTMLFormElement);
@@ -15,9 +28,9 @@ export function Search({ params, paramsCallback }: SearchProps) {
       formValues.has(AppUrlParams.Sort)
     ) {
       const newParams: RequestParams = {
-        limit: formValues.get(AppUrlParams.Limit) as string,
+        limit: formValues.get(AppUrlParams.Limit) as PageLimitValue,
         q: formValues.get(AppUrlParams.Query) as string,
-        sort: formValues.get(AppUrlParams.Sort) as string,
+        sort: formValues.get(AppUrlParams.Sort) as Sort,
         page: '1',
       };
       paramsCallback(newParams);
@@ -27,7 +40,6 @@ export function Search({ params, paramsCallback }: SearchProps) {
   return (
     <section className="rounded-2xl bg-slate-500 text-white m-2 p-2">
       <form
-        id="searchForm"
         className="flex justify-center gap-2 flex-wrap"
         onSubmit={(e) => {
           handleSubmit(e);
@@ -43,10 +55,15 @@ export function Search({ params, paramsCallback }: SearchProps) {
         <select
           className="text-black px-1 rounded"
           name="limit"
-          defaultValue={params.limit}
+          value={itemsPerPage}
+          // defaultValue={params.limit}
+          onChange={handleLimitChanging}
         >
           <option value="10">10 items per page</option>
           <option value="20">20 items per page</option>
+          <option value="30">30 items per page</option>
+          <option value="40">40 items per page</option>
+          <option value="50">50 items per page</option>
         </select>
         <select
           className="text-black px-1 rounded"

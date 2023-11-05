@@ -5,8 +5,8 @@ export interface AppProps {
 }
 
 export type RequestParams = {
-  limit: string;
-  sort: string;
+  limit: PageLimitValue;
+  sort: Sort;
   page: string;
   q: string;
 };
@@ -22,6 +22,14 @@ export enum AppUrlParams {
   Limit = 'limit',
   Page = 'page',
   Sort = 'sort',
+}
+
+export enum PageLimitValue {
+  ten = '10',
+  twenty = '20',
+  thirty = '30',
+  fourty = '40',
+  fifty = '50',
 }
 
 export type ArticleInCatalog = {

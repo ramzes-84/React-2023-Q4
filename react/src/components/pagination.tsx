@@ -33,7 +33,6 @@ export function Pagination({ params, paramsCallback }: PaginationProps) {
       </button>
       <input
         type="button"
-        form="searchForm"
         className="inline-block text-lg"
         name="page"
         value={params.page}
