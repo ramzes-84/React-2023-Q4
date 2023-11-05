@@ -35,7 +35,7 @@ export const SingleView = () => {
         </Link>
         <article
           ref={ref}
-          className="flex flex-col	items-center p-3 max-w-4xl mx-auto"
+          className="flex flex-col items-center p-3 max-w-4xl mx-auto"
         >
           <h1 className="underline-offset-1	m-2 text-center	text-sky-900 font-extrabold	text-xl">
             {article.webTitle}
@@ -53,7 +53,7 @@ export const SingleView = () => {
             alt={article.webTitle}
           />
           <div
-            className="overflow-auto"
+            className="overflow-hidden"
             dangerouslySetInnerHTML={{ __html: article.fields.body }}
           />
         </article>
