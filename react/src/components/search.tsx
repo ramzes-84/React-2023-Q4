@@ -56,7 +56,6 @@ export function Search({ params, paramsCallback }: SearchProps) {
           className="text-black px-1 rounded"
           name="limit"
           value={itemsPerPage}
-          // defaultValue={params.limit}
           onChange={handleLimitChanging}
         >
           <option value="10">10 items per page</option>

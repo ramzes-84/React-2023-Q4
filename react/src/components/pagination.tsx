@@ -1,48 +1,55 @@
+import { SyntheticEvent } from 'react';
 import { RequestParams } from '../types';
+import { paginationMapper } from '../utils/pagination-mapper';
+import { PagesBtn } from './page-button';
 
 interface PaginationProps {
   params: RequestParams;
   paramsCallback: (params: RequestParams) => void;
+  totalPages: number;
 }
 
-export function Pagination({ params, paramsCallback }: PaginationProps) {
-  const btnClassDisabled = `p-2 m-2 rounded-2xl text-white bg-slate-500 ${
-    +params.page === 1 ? 'disabled:opacity-75 cursor-not-allowed' : ''
-  }`;
-  function handleNextPage() {
-    const newPage = (+params.page + 1).toString();
-    const newConfig = { ...params, page: newPage };
-    paramsCallback(newConfig);
+export function Pagination({
+  params,
+  paramsCallback,
+  totalPages,
+}: PaginationProps) {
+  function handlePageChange(e: SyntheticEvent) {
+    if (e.target instanceof HTMLInputElement) {
+      const newPage = e.target.value;
+      const newConfig = { ...params, page: newPage };
+      paramsCallback(newConfig);
+    } else throw new Error('Clicked button is not an input');
   }
 
-  function handlePrevPage() {
-    if (+params.page < 2) return;
-    const newPage = (+params.page - 1).toString();
-    const newConfig = { ...params, page: newPage };
-    paramsCallback(newConfig);
-  }
+  const { firstPage, middleSegment, lastPage } = paginationMapper(
+    +params.page,
+    totalPages
+  );
+
+  const firstPageBtn = firstPage ? (
+    <span>
+      <PagesBtn num={firstPage} handlePageChange={handlePageChange} />
+      ...
+    </span>
+  ) : null;
+
+  const lastPageBtn = lastPage ? (
+    <span>
+      ...
+      <PagesBtn num={lastPage} handlePageChange={handlePageChange} />
+    </span>
+  ) : null;
+
+  const middleBtns = middleSegment.map((number) => (
+    <PagesBtn key={number} num={number} handlePageChange={handlePageChange} />
+  ));
 
   return (
     <div className="flex justify-center items-center gap-2">
-      <button
-        className={btnClassDisabled}
-        onClick={handlePrevPage}
-        disabled={+params.page === 1}
-      >
-        Previous page
-      </button>
-      <input
-        type="button"
-        className="inline-block text-lg"
-        name="page"
-        value={params.page}
-      />
-      <button
-        className="p-2 m-2 rounded-2xl bg-slate-500 text-white"
-        onClick={handleNextPage}
-      >
-        Next page
-      </button>
+      {firstPageBtn}
+      {middleBtns}
+      {lastPageBtn}
     </div>
   );
 }

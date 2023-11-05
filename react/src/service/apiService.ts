@@ -1,16 +1,16 @@
-import { Article, ArticleInCatalog, RequestParams } from '../types';
+import { Article, ArticlesResponse, RequestParams } from '../types';
 
 const API_KEY = 'b0706de8-b3da-4a9b-ac07-af4a3fec399a';
 const NEWS_ENDPOINT = 'https://content.guardianapis.com/search';
 const ARTICLE_ENDPOINT = 'https://content.guardianapis.com/';
 
 export class ApiService {
-  public async getNews(params: RequestParams): Promise<ArticleInCatalog[]> {
+  public async getNews(params: RequestParams): Promise<ArticlesResponse> {
     const url = `${NEWS_ENDPOINT}?q=${params.q}&order-by=${params.sort}&page-size=${params.limit}&page=${params.page}&api-key=${API_KEY}&show-fields=all`;
     const response = await fetch(url);
     if (response.status === 200) {
       const resFromJSON = await response.json();
-      return resFromJSON.response.results;
+      return resFromJSON.response;
     }
     throw new Error('There is something wrong with the server!');
   }

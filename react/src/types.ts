@@ -1,5 +1,17 @@
 import { ReactNode } from 'react';
 
+export interface ArticlesResponse {
+  status: string;
+  userTier: string;
+  total: number;
+  startIndex: number;
+  pageSize: number;
+  currentPage: number;
+  pages: number;
+  orderBy: string;
+  results: ArticleInCatalog[];
+}
+
 export interface AppProps {
   children?: ReactNode;
 }
