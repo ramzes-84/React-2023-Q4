@@ -59,10 +59,6 @@ export type ArticleInCatalog = {
   pillarName: string;
 };
 
-export type ContextType = {
-  params: RequestParams;
-};
-
 export type AppState = {
   keyword: string;
   isLoading: boolean;
@@ -117,4 +113,10 @@ export type AdditionalFields = {
   shouldHideReaderRevenue: string;
   showAffiliateLinks: string;
   bylineHtml: string;
+};
+
+export type AppContextType = {
+  params: RequestParams;
+  setParams: React.Dispatch<React.SetStateAction<RequestParams>>;
+  setErrorMsg: React.Dispatch<React.SetStateAction<string | null>>;
 };

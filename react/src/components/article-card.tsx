@@ -29,13 +29,13 @@ export function ArticleCard({ article }: ArticleCardProps) {
       <div className="flex flex-col justify-evenly">
         <Link
           to={`/split/${article.id}`}
-          className="px-3 text-white grow	bg-green-500"
+          className="px-3 text-white grow	bg-slate-300"
         >
           <button>&#128269;</button>
         </Link>
         <Link
           to={`/article/${article.id}`}
-          className="px-3 text-white grow	bg-yellow-500"
+          className="px-3 text-white grow	bg-slate-400"
         >
           <button>&#8599;</button>
         </Link>
@@ -43,7 +43,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
           href={article.webUrl}
           target="_blank"
           rel="noreferrer"
-          className="px-3 text-white grow	bg-red-500"
+          className="px-3 text-white grow	bg-slate-500"
         >
           <button>&#127760;</button>
         </a>

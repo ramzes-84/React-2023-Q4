@@ -1,10 +1,12 @@
 import { Search } from './components/search';
 import { NewsSection } from './components/news-section';
-import { RequestParams, StorageValues } from './types';
-import { useEffect, useState } from 'react';
+import { AppContextType, RequestParams, StorageValues } from './types';
+import { createContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { paramsCreator } from './utils/params-creator';
 import { ErrorThrower } from './components/error-thrower';
+
+const AppContext = createContext<null | AppContextType>(null);
 
 export default function App() {
   const savedParams = JSON.parse(
@@ -26,10 +28,12 @@ export default function App() {
   }, [params, setUrlParams]);
 
   return (
-    <section className="flex flex-col items-stretch">
-      <Search params={params} paramsCallback={setParams} />
-      <NewsSection params={params} paramsCallback={setParams} />
-      <ErrorThrower callback={() => setErrorMsg('Manually envoked error')} />
-    </section>
+    <AppContext.Provider value={{ params, setParams, setErrorMsg }}>
+      <section className="flex flex-col items-stretch">
+        <Search params={params} paramsCallback={setParams} />
+        <NewsSection params={params} paramsCallback={setParams} />
+        <ErrorThrower callback={() => setErrorMsg('Manually envoked error')} />
+      </section>
+    </AppContext.Provider>
   );
 }
