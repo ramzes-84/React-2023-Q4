@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { paramsCreator } from './utils/params-creator';
 import { ErrorThrower } from './components/error-thrower';
 
-const AppContext = createContext<null | AppContextType>(null);
+export const AppContext = createContext<null | AppContextType>(null);
 
 export default function App() {
   const savedParams = JSON.parse(
@@ -30,7 +30,7 @@ export default function App() {
   return (
     <AppContext.Provider value={{ params, setParams, setErrorMsg }}>
       <section className="flex flex-col items-stretch">
-        <Search params={params} paramsCallback={setParams} />
+        <Search />
         <NewsSection params={params} paramsCallback={setParams} />
         <ErrorThrower callback={() => setErrorMsg('Manually envoked error')} />
       </section>

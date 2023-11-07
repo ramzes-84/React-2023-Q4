@@ -1,12 +1,17 @@
-import { ChangeEvent, useState } from 'react';
-import { AppUrlParams, PageLimitValue, RequestParams, Sort } from '../types';
+import { ChangeEvent, useContext, useState } from 'react';
+import {
+  AppContextType,
+  AppUrlParams,
+  PageLimitValue,
+  RequestParams,
+  Sort,
+} from '../types';
+import { AppContext } from '../App';
 
-interface SearchProps {
-  params: RequestParams;
-  paramsCallback: (params: RequestParams) => void;
-}
-
-export function Search({ params, paramsCallback }: SearchProps) {
+export function Search() {
+  const { params, setParams } = useContext(
+    AppContext
+  ) as unknown as AppContextType;
   const [itemsPerPage, setItemsPerPage] = useState<PageLimitValue>(
     params.limit
   );
@@ -16,7 +21,7 @@ export function Search({ params, paramsCallback }: SearchProps) {
       limit: e.target.value as PageLimitValue,
       page: '1',
     };
-    paramsCallback(newParams);
+    setParams(newParams);
     setItemsPerPage(e.target.value as PageLimitValue);
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,7 +38,7 @@ export function Search({ params, paramsCallback }: SearchProps) {
         sort: formValues.get(AppUrlParams.Sort) as Sort,
         page: '1',
       };
-      paramsCallback(newParams);
+      setParams(newParams);
     } else throw new Error('The form isn`t complete');
   };
 
