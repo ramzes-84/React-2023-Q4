@@ -12,18 +12,32 @@ export function Search() {
   const { params, setParams } = useContext(
     AppContext
   ) as unknown as AppContextType;
+
   const [itemsPerPage, setItemsPerPage] = useState<PageLimitValue>(
     params.limit
   );
+  const [sorting, setSorting] = useState<Sort>(params.sort);
+
   const handleLimitChanging = (e: ChangeEvent<HTMLSelectElement>) => {
     const newParams = {
       ...params,
       limit: e.target.value as PageLimitValue,
       page: '1',
     };
-    setParams(newParams);
     setItemsPerPage(e.target.value as PageLimitValue);
+    setParams(newParams);
   };
+
+  const handleSortChanging = (e: ChangeEvent<HTMLSelectElement>) => {
+    const newParams = {
+      ...params,
+      sort: e.target.value as Sort,
+      page: '1',
+    };
+    setSorting(e.target.value as Sort);
+    setParams(newParams);
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formValues = new FormData(e.target as HTMLFormElement);
@@ -72,7 +86,8 @@ export function Search() {
         <select
           className="text-black px-1 rounded"
           name="sort"
-          defaultValue={params.sort}
+          value={sorting}
+          onChange={handleSortChanging}
         >
           <option value="newest">Show newest first</option>
           <option value="oldest">Show oldest first</option>

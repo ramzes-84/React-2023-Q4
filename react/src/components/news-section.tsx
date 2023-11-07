@@ -1,31 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
-import { ArticleInCatalog, ArticlesResponse, RequestParams } from '../types';
+import { useContext } from 'react';
+import { AppContextType } from '../types';
 import { ArticleCard } from './article-card';
-import { ApiService } from '../service/apiService';
 import { Spinner } from './spinner';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { Pagination } from './pagination';
+import { AppContext } from '../App';
 
-interface NewsProps {
-  params: RequestParams;
-  paramsCallback: (params: RequestParams) => void;
-}
-
-export function NewsSection({ params, paramsCallback }: NewsProps) {
-  const [news, setNews] = useState<null | ArticleInCatalog[]>(null);
+export function NewsSection() {
+  const { news } = useContext(AppContext) as unknown as AppContextType;
   const URLParams = useParams();
   const isSplitView = !!URLParams['*'];
-  const totalPages = useRef<number>(0);
-
-  useEffect(() => {
-    async function fetchNews() {
-      const apiService = new ApiService();
-      const newsResponse: ArticlesResponse = await apiService.getNews(params);
-      totalPages.current = newsResponse.pages;
-      setNews(newsResponse.results);
-    }
-    fetchNews();
-  }, [params]);
 
   if (news && news.length > 0) {
     const newsCards = news.map((article) => (
@@ -54,11 +38,7 @@ export function NewsSection({ params, paramsCallback }: NewsProps) {
             <Outlet />
           </section>
         </main>
-        <Pagination
-          params={params}
-          paramsCallback={paramsCallback}
-          totalPages={totalPages.current}
-        />
+        <Pagination />
       </>
     );
   } else if (news && news.length === 0) {
