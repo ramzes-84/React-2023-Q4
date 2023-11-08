@@ -53,7 +53,7 @@ export default function App() {
       <section className="flex flex-col items-stretch">
         <Search />
         <NewsSection />
-        <ErrorThrower callback={() => setErrorMsg('Manually envoked error')} />
+        <ErrorThrower />
       </section>
     </AppContext.Provider>
   );
