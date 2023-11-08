@@ -1,13 +1,11 @@
-import { useContext } from 'react';
-import { AppContextType } from '../types';
 import { ArticleCard } from './article-card';
 import { Spinner } from './spinner';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { Pagination } from './pagination';
-import { AppContext } from '../App';
+import { useContextChecker } from '../hooks/context-check';
 
 export function NewsSection() {
-  const { news } = useContext(AppContext) as unknown as AppContextType;
+  const { news } = useContextChecker();
   const URLParams = useParams();
   const isSplitView = !!URLParams['*'];
 

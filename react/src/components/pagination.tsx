@@ -1,13 +1,10 @@
-import { SyntheticEvent, useContext } from 'react';
+import { SyntheticEvent } from 'react';
 import { paginationMapper } from '../utils/pagination-mapper';
 import { PagesBtn } from './page-button';
-import { AppContext } from '../App';
-import { AppContextType } from '../types';
+import { useContextChecker } from '../hooks/context-check';
 
 export function Pagination() {
-  const { params, setParams, totalPages } = useContext(
-    AppContext
-  ) as unknown as AppContextType;
+  const { params, setParams, totalPages } = useContextChecker();
 
   function handlePageChange(e: SyntheticEvent) {
     if (e.target instanceof HTMLInputElement) {

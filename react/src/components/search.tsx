@@ -1,17 +1,9 @@
-import { ChangeEvent, useContext, useState } from 'react';
-import {
-  AppContextType,
-  AppUrlParams,
-  PageLimitValue,
-  RequestParams,
-  Sort,
-} from '../types';
-import { AppContext } from '../App';
+import { ChangeEvent, useState } from 'react';
+import { AppUrlParams, PageLimitValue, RequestParams, Sort } from '../types';
+import { useContextChecker } from '../hooks/context-check';
 
 export function Search() {
-  const { params, setParams } = useContext(
-    AppContext
-  ) as unknown as AppContextType;
+  const { params, setParams } = useContextChecker();
 
   const [itemsPerPage, setItemsPerPage] = useState<PageLimitValue>(
     params.limit
