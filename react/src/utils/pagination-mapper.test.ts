@@ -1,7 +1,7 @@
 import { expect, test, describe } from 'vitest';
 import { paginationMapper } from './pagination-mapper';
 
-describe.concurrent('Page mapping function tests', () => {
+describe('Page mapping function tests', () => {
   test('Should return first pagination section', () => {
     const { firstPage } = paginationMapper(10, 100);
     expect(firstPage).toEqual(1);
