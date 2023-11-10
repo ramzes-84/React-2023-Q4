@@ -16,12 +16,9 @@ describe('Navigation component', () => {
     const logo = screen.getByAltText('Logo');
     const burgerBtn = screen.getByRole('button');
     const burgerImg = screen.getByAltText('menu');
-    // const middleSegment = screen.getByText('6');
 
     expect(logo).toBeInTheDocument();
     expect(burgerBtn).toBeInTheDocument();
     expect(burgerImg).toBeVisible();
-
-    // expect(middleSegment).toBeInTheDocument();
   });
 });

@@ -14,5 +14,6 @@ export default defineConfig({
       all: true,
       include: ['src/**/*.tsx', 'src/**/*.ts'],
     },
+    clearMocks: true,
   },
 });
