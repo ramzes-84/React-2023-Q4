@@ -15,7 +15,15 @@ describe('Search component', () => {
     render(<Search />);
 
     const serchBtn = screen.getByText('Search');
+    const serchInput = screen.getByRole('textbox');
+    const selectLimit = screen.getByText('10 items per page');
+    const selectSort = screen.getByText('Show newest first');
 
     expect(serchBtn).toBeInTheDocument();
+    expect(serchBtn).toBeVisible();
+    expect(serchInput).toBeInTheDocument();
+    expect(serchInput).toBeVisible();
+    expect(selectLimit).toBeInTheDocument();
+    expect(selectSort).toBeInTheDocument();
   });
 });
