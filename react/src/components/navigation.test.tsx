@@ -4,7 +4,7 @@ import { Navigation } from './navigation';
 
 vi.mock('react-router-dom', () => {
   return {
-    Link: vi.fn(),
+    Link: vi.fn().mockReturnValue(<div>Main</div>),
     Outlet: vi.fn(),
   };
 });
@@ -14,11 +14,14 @@ describe('Navigation component', () => {
     render(<Navigation />);
 
     const logo = screen.getByAltText('Logo');
+    const mainBtn = screen.getByText('Main');
     const burgerBtn = screen.getByRole('button');
     const burgerImg = screen.getByAltText('menu');
 
     expect(logo).toBeInTheDocument();
     expect(burgerBtn).toBeInTheDocument();
     expect(burgerImg).toBeVisible();
+    expect(mainBtn).toBeInTheDocument();
+    expect(mainBtn).toBeVisible();
   });
 });
