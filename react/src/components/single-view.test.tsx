@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { act, render } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { SingleView } from './single-view';
 
 type FakeResponse = () => Promise<Promise<Response>>;
@@ -31,5 +31,15 @@ describe('SingleView component', () => {
     });
 
     expect(spy).toHaveBeenCalled();
+  });
+
+  it('Check that a loading indicator is displayed while fetching data', () => {
+    act(() => {
+      render(<SingleView />);
+    });
+
+    const spinner = screen.getByText('Spinner');
+
+    expect(spinner).toBeInTheDocument();
   });
 });
