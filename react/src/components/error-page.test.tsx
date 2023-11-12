@@ -6,9 +6,6 @@ import { RouterProvider, createMemoryRouter } from 'react-router-dom';
 vi.mock('./navigation', () => {
   return { Navigation: vi.fn() };
 });
-// vi.mock('react-router-dom', () => {
-//   return { useRouteError: vi.fn().mockReturnValue({ message: 'Some error' }) };
-// });
 vi.mock('react-router-dom', async () => {
   const component = await vi.importActual('react-router-dom');
 
