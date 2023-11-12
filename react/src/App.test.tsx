@@ -1,6 +1,13 @@
 import { describe, it, expect, vi } from 'vitest';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import App from './App';
+import { RequestParams } from './types';
 
 vi.mock('./components/news-section', () => {
   return {
@@ -77,6 +84,23 @@ describe('App component ', () => {
       const searchBox = screen.getByRole('textbox');
 
       expect((searchBox as HTMLInputElement).value).toEqual('football');
+    });
+  });
+
+  it('Verify that clicking the Search button saves the entered value to the local storage', async () => {
+    render(<App />);
+    const searchBox: HTMLInputElement = screen.getByRole('textbox');
+    const searchBtn: HTMLInputElement = screen.getByText('Search');
+
+    searchBox.value = 'car';
+
+    fireEvent.click(searchBtn);
+
+    await waitFor(() => {
+      const LSSettings = JSON.parse(
+        global.localStorage.getItem('settings') as string
+      );
+      expect((LSSettings as RequestParams).q).toEqual('car');
     });
   });
 });
