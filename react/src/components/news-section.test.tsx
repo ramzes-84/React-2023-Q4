@@ -1,12 +1,20 @@
 import { describe, it, expect, vi } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
 import { NewsSection } from './news-section';
+import { Navigation } from './navigation';
+import { ErrorPage } from './error-page';
+import { SingleView } from './single-view';
+import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import App from '../App';
 
-vi.mock('react-router-dom', () => {
+vi.mock('react-router-dom', async () => {
+  const component = await vi.importActual('react-router-dom');
+
   return {
-    Link: vi.fn(),
-    Outlet: vi.fn(),
+    ...(component as object),
     useParams: vi.fn().mockReturnValue({ ['*']: 'url/params' }),
+    Link: vi.fn(),
+    Outlet: vi.fn().mockReturnValue(<div>Outlet</div>),
   };
 });
 vi.mock('./article-card', () => {
@@ -108,7 +116,8 @@ vi.mock('../hooks/context-check', () => {
     useContextChecker: vi
       .fn()
       .mockReturnValueOnce({ news: [articleResponse1, articleResponse2] })
-      .mockReturnValueOnce({ news: [] }),
+      .mockReturnValueOnce({ news: [] })
+      .mockReturnValue({ news: [articleResponse1, articleResponse2] }),
   };
 });
 
@@ -135,5 +144,41 @@ describe('NewsSection component should render warning when there are no data', a
     const nothingMsg = screen.getByText('Nothing was found');
 
     expect(nothingMsg).toBeInTheDocument();
+  });
+});
+
+describe('Make sure the detailed card component correctly displays the detailed card data', async () => {
+  it('', () => {
+    const routes = [
+      {
+        path: '/',
+        element: <Navigation />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            path: '/',
+            element: <App />,
+            children: [
+              {
+                path: 'split/*',
+                element: <SingleView />,
+              },
+            ],
+          },
+          {
+            path: 'article/*',
+            element: <SingleView />,
+          },
+        ],
+      },
+    ];
+    const router = createMemoryRouter(routes, {
+      initialEntries: ['/split/id'],
+    });
+
+    render(<RouterProvider router={router} />);
+    const outlet = screen.getByText('Outlet');
+
+    expect(outlet).toBeInTheDocument();
   });
 });
