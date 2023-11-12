@@ -1,7 +1,8 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { ArticleCard } from './article-card';
 import { ArticleInCatalog } from '../types';
+import { BrowserRouter } from 'react-router-dom';
 
 const articleResponse: ArticleInCatalog = {
   id: 'id',
@@ -45,20 +46,37 @@ const articleResponse: ArticleInCatalog = {
     newspaperEditionDate: '',
   },
 };
-vi.mock('react-router-dom', () => {
-  return {
-    Link: vi.fn(),
-  };
-});
 
 describe('ArticleCard component', () => {
-  it('Should render provided article info', () => {
-    render(<ArticleCard article={articleResponse} />);
+  it('Ensure that the card component renders the relevant card data', () => {
+    render(
+      <BrowserRouter>
+        <ArticleCard article={articleResponse} />
+      </BrowserRouter>
+    );
 
-    const link = screen.getByRole('link');
     const btn = screen.getByText('🌐');
+    const webTitle = screen.getByText('webTitle');
+    const trailText = screen.getByText('Follow live');
 
-    expect(link).toBeInTheDocument();
     expect(btn).toBeInTheDocument();
+    expect(webTitle).toBeInTheDocument();
+    expect(trailText).toBeInTheDocument();
+  });
+
+  it('Validate that clicking on a card opens a detailed card component', () => {
+    act(() => {
+      render(
+        <BrowserRouter>
+          <ArticleCard article={articleResponse} />
+        </BrowserRouter>
+      );
+    });
+    expect(document.location.pathname).toEqual('/');
+
+    const btn = screen.getByText('🔍');
+    fireEvent.click(btn);
+
+    expect(document.location.pathname).toEqual('/split/id');
   });
 });

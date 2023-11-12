@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ArticleInCatalog } from '../types';
 
 interface ArticleCardProps {
@@ -6,9 +6,14 @@ interface ArticleCardProps {
 }
 
 export function ArticleCard({ article }: ArticleCardProps) {
+  const navigation = useNavigate();
+
   return (
     <div className="flex flex-row border rounded-2xl border-slate-500 overflow-hidden">
-      <Link to={`/split/${article.id}`} className="flex flex-row">
+      <div
+        onClick={() => navigation(`/split/${article.id}`)}
+        className="flex flex-row"
+      >
         <img
           className="hidden sm:block"
           width={320}
@@ -25,20 +30,20 @@ export function ArticleCard({ article }: ArticleCardProps) {
             <p className="p-1 grow">Category: {article.sectionName}</p>
           </div>
         </div>
-      </Link>
+      </div>
       <div className="flex flex-col justify-evenly">
-        <Link
-          to={`/split/${article.id}`}
+        <div
+          onClick={() => navigation(`/split/${article.id}`)}
           className="px-3 text-white grow	bg-slate-300"
         >
           <button>&#128269;</button>
-        </Link>
-        <Link
-          to={`/article/${article.id}`}
+        </div>
+        <div
+          onClick={() => navigation(`/article/${article.id}`)}
           className="px-3 text-white grow	bg-slate-400"
         >
           <button>&#8599;</button>
-        </Link>
+        </div>
         <a
           href={article.webUrl}
           target="_blank"
