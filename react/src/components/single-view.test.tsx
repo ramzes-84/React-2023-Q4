@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { SingleView } from './single-view';
 
 type FakeResponse = () => Promise<Promise<Response>>;
@@ -23,20 +23,24 @@ const mockedFetch = () =>
 const spy = vi
   .spyOn(global, 'fetch')
   .mockImplementation(mockedFetch as unknown as FakeResponse);
+vi.mock('react', async () => {
+  const component = await vi.importActual('react');
+
+  return {
+    ...(component as object),
+    useState: vi.fn().mockReturnValue([null, vi.fn()]),
+  };
+});
 
 describe('SingleView component', () => {
   it('Check that clicking triggers an additional API call to fetch detailed information', () => {
-    act(() => {
-      render(<SingleView />);
-    });
+    render(<SingleView />);
 
     expect(spy).toHaveBeenCalled();
   });
 
   it('Check that a loading indicator is displayed while fetching data', () => {
-    act(() => {
-      render(<SingleView />);
-    });
+    render(<SingleView />);
 
     const spinner = screen.getByText('Spinner');
 

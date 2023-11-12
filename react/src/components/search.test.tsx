@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Search } from './search';
+import { PageLimitValue } from '../types';
 
 vi.mock('../hooks/context-check', () => {
   return {
@@ -25,5 +26,15 @@ describe('Search component', () => {
     expect(serchInput).toBeVisible();
     expect(selectLimit).toBeInTheDocument();
     expect(selectSort).toBeInTheDocument();
+  });
+
+  it('Changing search params should trigger params setting', () => {
+    render(<Search />);
+
+    const selectLimit: HTMLSelectElement =
+      screen.getByText('10 items per page');
+    fireEvent.change(selectLimit, { target: { value: PageLimitValue.fifty } });
+
+    expect(selectLimit.value).toEqual('50');
   });
 });
