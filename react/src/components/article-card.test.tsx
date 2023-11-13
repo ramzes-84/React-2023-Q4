@@ -79,4 +79,17 @@ describe('ArticleCard component', () => {
 
     expect(document.location.pathname).toEqual('/split/id');
   });
+
+  it('Validate that NO IMAGE is shown', () => {
+    articleResponse.fields.thumbnail = '';
+    render(
+      <BrowserRouter>
+        <ArticleCard article={articleResponse} />
+      </BrowserRouter>
+    );
+    const img: HTMLImageElement = screen.getByRole('img');
+
+    expect(img).toBeInTheDocument();
+    expect(img.src).toEqual('http://localhost:3000/no-image.png');
+  });
 });
