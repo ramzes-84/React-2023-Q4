@@ -1,12 +1,7 @@
 import { Search } from './components/search';
 import { NewsSection } from './components/news-section';
-import {
-  AppContextType,
-  ArticlesResponse,
-  RequestParams,
-  StorageValues,
-} from './types';
-import { createContext, useEffect, useState } from 'react';
+import { ArticlesResponse, RequestParams, StorageValues } from './types';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { paramsCreator } from './utils/params-creator';
 import { ErrorThrower } from './components/error-thrower';
@@ -16,8 +11,6 @@ import { totalPagesSlice } from './store/total-pages-slice';
 import { newsSlice } from './store/news-slice';
 import { paramsSlice } from './store/params-slice';
 import { RootState } from './store/store';
-
-export const AppContext = createContext<null | AppContextType>(null);
 
 export default function App() {
   const dispatch = useDispatch();
@@ -51,12 +44,10 @@ export default function App() {
   }, [dispatch, params]);
 
   return (
-    <AppContext.Provider value={{ setErrorMsg }}>
-      <section className="flex flex-col items-stretch">
-        <Search />
-        <NewsSection />
-        <ErrorThrower />
-      </section>
-    </AppContext.Provider>
+    <section className="flex flex-col items-stretch">
+      <Search />
+      <NewsSection />
+      <ErrorThrower cb={() => setErrorMsg('Manually envoked error')} />
+    </section>
   );
 }
