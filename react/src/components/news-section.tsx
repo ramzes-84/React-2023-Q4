@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 
 export function NewsSection() {
-  const news = useSelector((state: RootState) => state.news.news);
+  const news = useSelector((state: RootState) => state.news.value);
   const URLParams = useParams();
   const isSplitView = !!URLParams['*'];
 

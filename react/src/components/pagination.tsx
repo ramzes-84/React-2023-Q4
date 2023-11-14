@@ -1,21 +1,22 @@
 import { SyntheticEvent } from 'react';
 import { paginationMapper } from '../utils/pagination-mapper';
 import { PagesBtn } from './page-button';
-import { useContextChecker } from '../hooks/context-check';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { paramsSlice } from '../store/params-slice';
 
 export function Pagination() {
-  const { params, setParams } = useContextChecker();
+  const dispatch = useDispatch();
   const totalPagesFromRedux = useSelector(
     (state: RootState) => state.totalPages.value
   );
+  const params = useSelector((state: RootState) => state.params.value);
 
   function handlePageChange(e: SyntheticEvent) {
     if (e.target instanceof HTMLInputElement) {
       const newPage = e.target.value;
       const newConfig = { ...params, page: newPage };
-      setParams(newConfig);
+      dispatch(paramsSlice.actions.updateParams(newConfig));
     } else throw new Error('Clicked button is not an input');
   }
 

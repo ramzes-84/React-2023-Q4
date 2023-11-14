@@ -1,16 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { AppReduxState } from '../types';
 
-export interface TotalPagesState {
-  value: number;
-}
+const initialReduxTotalPages: AppReduxState<number> = { value: 1 };
 
-const initialReduxTotalPages: TotalPagesState = { value: 1 };
-
-// const savedParams = localStorage.getItem(StorageValues.Settings);
-// if (savedParams) {
-//   initialReduxParams = JSON.parse(savedParams) as RequestParams;
-// }
 export const totalPagesSlice = createSlice({
   name: 'totalPages',
   initialState: initialReduxTotalPages,
@@ -20,6 +13,3 @@ export const totalPagesSlice = createSlice({
     },
   },
 });
-
-// export const { updateTotalPages } = totalPagesSlice.actions;
-// export default totalPagesSlice.reducer;

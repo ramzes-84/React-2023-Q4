@@ -35,6 +35,6 @@ describe('Search component', () => {
       screen.getByText('10 items per page');
     fireEvent.change(selectLimit, { target: { value: PageLimitValue.fifty } });
 
-    expect(selectLimit.value).toEqual('50');
+    expect(selectLimit.value).toEqual('500');
   });
 });

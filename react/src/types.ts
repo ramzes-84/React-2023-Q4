@@ -116,9 +116,13 @@ export type AdditionalFields = {
 };
 
 export type AppContextType = {
-  params: RequestParams;
-  setParams: React.Dispatch<React.SetStateAction<RequestParams>>;
+  // params: RequestParams;
+  // setParams: React.Dispatch<React.SetStateAction<RequestParams>>;
   setErrorMsg: React.Dispatch<React.SetStateAction<string | null>>;
   // news: null | ArticleInCatalog[];
   // totalPages?: React.MutableRefObject<number>;
 };
+
+export interface AppReduxState<T> {
+  value: T;
+}

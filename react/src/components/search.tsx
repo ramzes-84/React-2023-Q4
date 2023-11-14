@@ -1,14 +1,16 @@
 import { ChangeEvent, useState } from 'react';
 import { AppUrlParams, PageLimitValue, RequestParams, Sort } from '../types';
-import { useContextChecker } from '../hooks/context-check';
+import { RootState } from '../store/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { paramsSlice } from '../store/params-slice';
 
 export function Search() {
-  const { params, setParams } = useContextChecker();
-
+  const dispatch = useDispatch();
+  const params = useSelector((state: RootState) => state.params.value);
+  const [sorting, setSorting] = useState<Sort>(params.sort);
   const [itemsPerPage, setItemsPerPage] = useState<PageLimitValue>(
     params.limit
   );
-  const [sorting, setSorting] = useState<Sort>(params.sort);
 
   const handleLimitChanging = (e: ChangeEvent<HTMLSelectElement>) => {
     const newParams = {
@@ -17,7 +19,7 @@ export function Search() {
       page: '1',
     };
     setItemsPerPage(e.target.value as PageLimitValue);
-    setParams(newParams);
+    dispatch(paramsSlice.actions.updateParams(newParams));
   };
 
   const handleSortChanging = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -27,7 +29,7 @@ export function Search() {
       page: '1',
     };
     setSorting(e.target.value as Sort);
-    setParams(newParams);
+    dispatch(paramsSlice.actions.updateParams(newParams));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,7 +46,7 @@ export function Search() {
         sort: formValues.get(AppUrlParams.Sort) as Sort,
         page: '1',
       };
-      setParams(newParams);
+      dispatch(paramsSlice.actions.updateParams(newParams));
     } else throw new Error('The form isn`t complete');
   };
 

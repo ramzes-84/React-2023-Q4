@@ -1,19 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { ArticleInCatalog } from '../types';
+import { AppReduxState, ArticleInCatalog } from '../types';
 
-export interface NewsState {
-  news: ArticleInCatalog[];
-}
-
-const initialNews: NewsState = { news: [] };
+const initialNews: AppReduxState<ArticleInCatalog[]> = { value: [] };
 
 export const newsSlice = createSlice({
   name: 'news',
   initialState: initialNews,
   reducers: {
     updateNews: (state, action: PayloadAction<ArticleInCatalog[]>) => {
-      state.news = action.payload;
+      state.value = action.payload;
     },
   },
 });
