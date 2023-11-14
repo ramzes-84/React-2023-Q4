@@ -2,11 +2,10 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Pagination } from './pagination';
 
-vi.mock('../hooks/context-check', () => {
+vi.mock('react-redux', () => {
   return {
-    useContextChecker: vi
-      .fn()
-      .mockReturnValue({ params: {}, setParams: vi.fn(), totalPages: 100 }),
+    useSelector: vi.fn().mockReturnValueOnce(100).mockReturnValueOnce({}),
+    useDispatch: vi.fn(),
   };
 });
 vi.mock('../utils/pagination-mapper', () => {

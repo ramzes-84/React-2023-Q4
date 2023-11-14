@@ -9,7 +9,6 @@ import App from '../App';
 
 vi.mock('react-router-dom', async () => {
   const component = await vi.importActual('react-router-dom');
-
   return {
     ...(component as object),
     useParams: vi.fn().mockReturnValue({ ['*']: 'url/params' }),
@@ -27,7 +26,7 @@ vi.mock('./pagination', () => {
     Pagination: vi.fn().mockReturnValue(<div>Pagination buttons</div>),
   };
 });
-vi.mock('../hooks/context-check', () => {
+vi.mock('react-redux', () => {
   const articleResponse1 = {
     id: 'id1',
     type: 'type',
@@ -113,11 +112,12 @@ vi.mock('../hooks/context-check', () => {
     },
   };
   return {
-    useContextChecker: vi
+    useSelector: vi
       .fn()
-      .mockReturnValueOnce({ news: [articleResponse1, articleResponse2] })
-      .mockReturnValueOnce({ news: [] })
-      .mockReturnValue({ news: [articleResponse1, articleResponse2] }),
+      .mockReturnValueOnce([articleResponse1, articleResponse2])
+      .mockReturnValueOnce([])
+      .mockReturnValue([articleResponse1, articleResponse2]),
+    useDispatch: vi.fn(),
   };
 });
 

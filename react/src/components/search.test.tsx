@@ -3,11 +3,10 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Search } from './search';
 import { PageLimitValue } from '../types';
 
-vi.mock('../hooks/context-check', () => {
+vi.mock('react-redux', () => {
   return {
-    useContextChecker: vi
-      .fn()
-      .mockReturnValue({ params: {}, setParams: vi.fn() }),
+    useSelector: vi.fn().mockReturnValue({}),
+    useDispatch: vi.fn(),
   };
 });
 
