@@ -19,7 +19,6 @@ export const AppContext = createContext<null | AppContextType>(null);
 
 export default function App() {
   const dispatch = useDispatch();
-  // const [news, setNews] = useState<null | ArticleInCatalog[]>(null);
 
   const [urlParams, setUrlParams] = useSearchParams();
   const [errorMsg, setErrorMsg] = useState<null | string>(null);

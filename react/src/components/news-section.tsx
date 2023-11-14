@@ -2,10 +2,11 @@ import { ArticleCard } from './article-card';
 import { Spinner } from './spinner';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { Pagination } from './pagination';
-import { useContextChecker } from '../hooks/context-check';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 export function NewsSection() {
-  const { news } = useContextChecker();
+  const news = useSelector((state: RootState) => state.news.news);
   const URLParams = useParams();
   const isSplitView = !!URLParams['*'];
 
