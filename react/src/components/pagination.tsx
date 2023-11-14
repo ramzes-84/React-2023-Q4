@@ -2,9 +2,14 @@ import { SyntheticEvent } from 'react';
 import { paginationMapper } from '../utils/pagination-mapper';
 import { PagesBtn } from './page-button';
 import { useContextChecker } from '../hooks/context-check';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 export function Pagination() {
-  const { params, setParams, totalPages } = useContextChecker();
+  const { params, setParams } = useContextChecker();
+  const totalPagesFromRedux = useSelector(
+    (state: RootState) => state.totalPages.value
+  );
 
   function handlePageChange(e: SyntheticEvent) {
     if (e.target instanceof HTMLInputElement) {
@@ -16,7 +21,7 @@ export function Pagination() {
 
   const { firstPage, middleSegment, lastPage } = paginationMapper(
     +params.page,
-    totalPages.current > 500 ? 500 : totalPages.current
+    totalPagesFromRedux > 500 ? 500 : totalPagesFromRedux
   );
 
   const middleBtns = middleSegment.map((number) => (

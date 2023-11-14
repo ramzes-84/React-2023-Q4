@@ -21,5 +21,5 @@ export const totalPagesSlice = createSlice({
   },
 });
 
-export const { updateTotalPages } = totalPagesSlice.actions;
-export default totalPagesSlice.reducer;
+// export const { updateTotalPages } = totalPagesSlice.actions;
+// export default totalPagesSlice.reducer;

@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import totalPagesReducer from './total-pages-slice';
+import { totalPagesSlice } from './total-pages-slice';
+import { newsSlice } from './news-slice';
 
 export const store = configureStore({
   reducer: {
-    totalPages: totalPagesReducer,
+    totalPages: totalPagesSlice.reducer,
+    news: newsSlice.reducer,
   },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-
 export type AppDispatch = typeof store.dispatch;
