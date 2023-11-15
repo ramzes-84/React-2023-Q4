@@ -16,6 +16,7 @@ import { totalPagesSlice } from './store/total-pages-slice';
 import { newsSlice } from './store/news-slice';
 import { paramsSlice } from './store/params-slice';
 import { RootState } from './store/store';
+// import { newsApi } from './service/newsApi';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ export default function App() {
   dispatch(
     paramsSlice.actions.updateParams(paramsCreator(savedParams, urlParams))
   );
+  // const { data, error, isLoading } = newsApi.useGetNewsQuery(params);
 
   useEffect(() => {
     if (errorMsg) throw new Error(errorMsg);
