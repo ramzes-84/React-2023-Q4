@@ -1,17 +1,5 @@
 import { ReactNode } from 'react';
 
-export interface ArticlesResponse {
-  status: string;
-  userTier: string;
-  total: number;
-  startIndex: number;
-  pageSize: number;
-  currentPage: number;
-  pages: number;
-  orderBy: string;
-  results: ArticleInCatalog[];
-}
-
 export interface AppProps {
   children?: ReactNode;
 }
@@ -115,14 +103,24 @@ export type AdditionalFields = {
   bylineHtml: string;
 };
 
-export type AppContextType = {
-  // params: RequestParams;
-  // setParams: React.Dispatch<React.SetStateAction<RequestParams>>;
-  setErrorMsg: React.Dispatch<React.SetStateAction<string | null>>;
-  // news: null | ArticleInCatalog[];
-  // totalPages?: React.MutableRefObject<number>;
-};
-
 export interface AppReduxState<T> {
   value: T;
+}
+
+export interface NewsResponse<T> {
+  status: string;
+  userTier: string;
+  total: number;
+  startIndex: number;
+  pageSize: number;
+  currentPage: number;
+  pages: number;
+  orderBy: string;
+  results: T;
+}
+export interface ArticleResponse {
+  status: string;
+  userTier: string;
+  total: number;
+  content: Article;
 }

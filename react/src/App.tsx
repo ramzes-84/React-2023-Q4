@@ -1,6 +1,11 @@
 import { Search } from './components/search';
 import { NewsSection } from './components/news-section';
-import { ArticlesResponse, RequestParams, StorageValues } from './types';
+import {
+  ArticleInCatalog,
+  NewsResponse,
+  RequestParams,
+  StorageValues,
+} from './types';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { paramsCreator } from './utils/params-creator';
@@ -36,7 +41,8 @@ export default function App() {
   useEffect(() => {
     async function fetchNews() {
       const apiService = new ApiService();
-      const newsResponse: ArticlesResponse = await apiService.getNews(params);
+      const newsResponse: NewsResponse<ArticleInCatalog[]> =
+        await apiService.getNews(params);
       dispatch(totalPagesSlice.actions.updateTotalPages(newsResponse.pages));
       dispatch(newsSlice.actions.updateNews(newsResponse.results));
     }
