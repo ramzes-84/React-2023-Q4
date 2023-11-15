@@ -25,7 +25,6 @@ const enum AdditionalFields {
 export const newsApi = createApi({
   reducerPath: 'newsApi',
   baseQuery: fetchBaseQuery({ baseUrl: ENDPOINT }),
-  refetchOnFocus: true,
   endpoints: (builder) => ({
     getNews: builder.query<NewsResponse<ArticleInCatalog[]>, RequestParams>({
       query: (params) => ({
@@ -38,6 +37,7 @@ export const newsApi = createApi({
           [NewsUrlQuery.page]: params.page,
           [NewsUrlQuery.q]: params.q,
         },
+        refetchOnFocus: true,
       }),
       transformResponse: (resp: {
         response: NewsResponse<ArticleInCatalog[]>;
@@ -45,7 +45,7 @@ export const newsApi = createApi({
     }),
     getArticle: builder.query<Article, string>({
       query: (id: string) => ({
-        url: NEWS_ENDPOINT + id,
+        url: id,
         params: {
           [NewsUrlQuery.apiKey]: API_KEY,
           [NewsUrlQuery.additionalFields]: AdditionalFields.all,
