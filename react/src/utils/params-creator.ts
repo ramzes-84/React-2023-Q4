@@ -15,6 +15,8 @@ export const paramsCreator = (
       urlParams.get(AppUrlParams.Page) || savedParams?.page || '1',
     [AppUrlParams.Sort]:
       urlParams.get(AppUrlParams.Sort) || savedParams?.sort || Sort.Newest,
+    [AppUrlParams.Details]:
+      urlParams.get(AppUrlParams.Details) || savedParams?.details || '0',
   };
   return appParams as RequestParams;
 };

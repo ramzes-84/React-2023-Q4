@@ -42,6 +42,7 @@ export function Search() {
         q: formValues.get(AppUrlParams.Query) as string,
         sort: formValues.get(AppUrlParams.Sort) as Sort,
         page: '1',
+        details: '0',
       };
       dispatch(paramsSlice.actions.updateParams(newParams));
     } else throw new Error('The form isn`t complete');

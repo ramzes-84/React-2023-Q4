@@ -24,6 +24,7 @@ describe.concurrent('Config creator function tests', () => {
       sort: Sort.Oldest,
       page: '50',
       q: 'query',
+      details: '0',
     };
     const badUrlParams = {
       get: vi.fn(),

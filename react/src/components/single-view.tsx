@@ -7,7 +7,7 @@ import { newsApi } from '../service/newsApi';
 export const SingleView = () => {
   const params = useParams();
   const ref = useRef<HTMLElement | null>(null);
-  const { data, error, isLoading } = newsApi.useGetArticleQuery(
+  const { data, isError, isLoading } = newsApi.useGetArticleQuery(
     params['*'] as string
   );
 
@@ -49,7 +49,7 @@ export const SingleView = () => {
           </article>
         </>
       )}
-      {error && (
+      {isError && (
         <div>Something wrong with the server, try again later, please.</div>
       )}
     </>

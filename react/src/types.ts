@@ -9,6 +9,7 @@ export type RequestParams = {
   sort: Sort;
   page: string;
   q: string;
+  details: '1' | '0';
 };
 
 export enum Sort {
@@ -22,6 +23,7 @@ export enum AppUrlParams {
   Limit = 'limit',
   Page = 'page',
   Sort = 'sort',
+  Details = 'details',
 }
 
 export enum PageLimitValue {
