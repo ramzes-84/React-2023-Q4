@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { AppReduxState, PageLimitValue, RequestParams, Sort } from '../types';
+import { AppReduxState, RequestParams, StorageValues } from '../types';
+import { paramsCreator } from '../utils/params-creator';
+
+const savedParams = JSON.parse(
+  localStorage.getItem(StorageValues.Settings) as string
+) as RequestParams;
+const urlParams = new URL(document.location.href).searchParams;
 
 const initialParams: AppReduxState<RequestParams> = {
-  value: {
-    limit: PageLimitValue.ten,
-    sort: Sort.Newest,
-    page: '1',
-    q: '',
-  },
+  value: paramsCreator(savedParams, urlParams),
 };
 
 export const paramsSlice = createSlice({

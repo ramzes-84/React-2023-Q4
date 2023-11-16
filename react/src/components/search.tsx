@@ -12,23 +12,20 @@ export function Search() {
     params.limit
   );
 
-  const handleLimitChanging = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const newParams = {
       ...params,
-      limit: e.target.value as PageLimitValue,
+      [e.target.name]: e.target.value,
       page: '1',
     };
-    setItemsPerPage(e.target.value as PageLimitValue);
-    dispatch(paramsSlice.actions.updateParams(newParams));
-  };
-
-  const handleSortChanging = (e: ChangeEvent<HTMLSelectElement>) => {
-    const newParams = {
-      ...params,
-      sort: e.target.value as Sort,
-      page: '1',
-    };
-    setSorting(e.target.value as Sort);
+    switch (e.target.name) {
+      case AppUrlParams.Limit:
+        setItemsPerPage(e.target.value as PageLimitValue);
+        break;
+      case AppUrlParams.Sort:
+        setSorting(e.target.value as Sort);
+        break;
+    }
     dispatch(paramsSlice.actions.updateParams(newParams));
   };
 
@@ -69,7 +66,7 @@ export function Search() {
           className="text-black px-1 rounded"
           name="limit"
           value={itemsPerPage}
-          onChange={handleLimitChanging}
+          onChange={handleSelectChange}
         >
           <option value="10">10 items per page</option>
           <option value="20">20 items per page</option>
@@ -81,7 +78,7 @@ export function Search() {
           className="text-black px-1 rounded"
           name="sort"
           value={sorting}
-          onChange={handleSortChanging}
+          onChange={handleSelectChange}
         >
           <option value="newest">Show newest first</option>
           <option value="oldest">Show oldest first</option>
