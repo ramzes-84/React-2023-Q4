@@ -13,6 +13,11 @@ export default defineConfig({
     coverage: {
       all: true,
       include: ['src/**/*.tsx', 'src/**/*.ts'],
+      exclude: [
+        'src/components/error-boundary.tsx',
+        'src/main.tsx',
+        'src/vite-env.d.ts',
+      ],
     },
     clearMocks: true,
   },

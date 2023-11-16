@@ -2,48 +2,82 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { SingleView } from './single-view';
 
-type FakeResponse = () => Promise<Promise<Response>>;
-
-vi.mock('react-router-dom', () => {
+vi.mock('react-router-dom', async () => {
+  const component = await vi.importActual('react-router-dom');
   return {
+    ...(component as object),
     Link: vi.fn(),
     useParams: vi.fn().mockReturnValue({ ['*']: 'url/params' }),
   };
 });
+
+vi.mock('react', async () => {
+  const component = await vi.importActual('react');
+  return {
+    ...(component as object),
+    useEffect: vi.fn(),
+    useRef: vi.fn(),
+  };
+});
+
 vi.mock('./spinner', () => {
   return {
     Spinner: vi.fn().mockReturnValue(<div>Spinner</div>),
   };
 });
-const mockedFetch = () =>
-  Promise.resolve({
-    status: 200,
-    json: () => Promise.resolve({ response: { content: 'Test content' } }),
-  });
-const spy = vi
-  .spyOn(global, 'fetch')
-  .mockImplementation(mockedFetch as unknown as FakeResponse);
-vi.mock('react', async () => {
-  const component = await vi.importActual('react');
 
+vi.mock('../service/newsApi', () => {
   return {
-    ...(component as object),
-    useState: vi.fn().mockReturnValue([null, vi.fn()]),
+    newsApi: {
+      useGetArticleQuery: vi
+        .fn()
+        .mockReturnValueOnce({ data: false, isError: false, isLoading: true })
+        .mockReturnValueOnce({ data: false, isError: true, isLoading: false })
+        .mockReturnValue({
+          data: {
+            id: 'id',
+            webPublicationDate: '2023-11-10T03:39:59Z',
+            webTitle: 'webTitle',
+            fields: {
+              headline: 'headline',
+              trailText: 'Follow live',
+              thumbnail: 'https://test.com/',
+              body: 'body',
+            },
+          },
+          isError: false,
+          isLoading: false,
+        }),
+    },
   };
 });
 
 describe('SingleView component', () => {
-  it('Check that clicking triggers an additional API call to fetch detailed information', () => {
-    render(<SingleView />);
-
-    expect(spy).toHaveBeenCalled();
-  });
-
   it('Check that a loading indicator is displayed while fetching data', () => {
     render(<SingleView />);
 
     const spinner = screen.getByText('Spinner');
 
     expect(spinner).toBeInTheDocument();
+  });
+
+  it('Check that error message is displayed on fetch error', () => {
+    render(<SingleView />);
+
+    const errorMsg = screen.getByText(
+      'Something wrong with the server, try again later, please.'
+    );
+
+    expect(errorMsg).toBeInTheDocument();
+  });
+
+  it('Check that article is displayed on success fetch', () => {
+    render(<SingleView />);
+
+    const title = screen.getByText('webTitle');
+    const body = screen.getByText('body');
+
+    expect(title).toBeInTheDocument();
+    expect(body).toBeInTheDocument();
   });
 });

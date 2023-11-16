@@ -16,6 +16,7 @@ describe.concurrent('Config creator function tests', () => {
     expect(resultParams.limit).toEqual(PageLimitValue.ten);
     expect(resultParams.page).toEqual('1');
     expect(resultParams.sort).toEqual(Sort.Newest);
+    expect(resultParams.details).toEqual('0');
   });
 
   it('Should return savedParams if provided', () => {
@@ -24,7 +25,7 @@ describe.concurrent('Config creator function tests', () => {
       sort: Sort.Oldest,
       page: '50',
       q: 'query',
-      details: '0',
+      details: '1',
     };
     const badUrlParams = {
       get: vi.fn(),
@@ -38,5 +39,6 @@ describe.concurrent('Config creator function tests', () => {
     expect(resultParams.limit).toEqual(PageLimitValue.fifty);
     expect(resultParams.page).toEqual('50');
     expect(resultParams.sort).toEqual(Sort.Oldest);
+    expect(resultParams.details).toEqual('1');
   });
 });
