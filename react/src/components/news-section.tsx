@@ -2,16 +2,28 @@ import { ArticleCard } from './article-card';
 import { Spinner } from './spinner';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { Pagination } from './pagination';
+import { newsApi } from '../service/newsApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 
 export function NewsSection() {
-  const news = useSelector((state: RootState) => state.news.value);
   const URLParams = useParams();
   const isSplitView = !!URLParams['*'];
+  const params = useSelector((state: RootState) => state.params.value);
+  const { data, isError, isLoading } = newsApi.useGetNewsQuery(params);
 
-  if (news && news.length > 0) {
-    const newsCards = news.map((article) => (
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (isError) {
+    return (
+      <main className="bg-yellow-200 p-6 mx-4 rounded-xl text-center">
+        The server returned an error
+      </main>
+    );
+  }
+  if (data && data.results.length > 0) {
+    const newsCards = data.results.map((article) => (
       <ArticleCard key={article.id} article={article} />
     ));
     return (
@@ -40,8 +52,11 @@ export function NewsSection() {
         <Pagination />
       </>
     );
-  } else if (news && news.length === 0) {
-    return <main className="text-center">Nothing was found</main>;
+  } else if (data && data.results.length === 0) {
+    return (
+      <main className="bg-yellow-200 p-6 mx-4 rounded-xl text-center">
+        Nothing was found
+      </main>
+    );
   }
-  return <Spinner />;
 }
