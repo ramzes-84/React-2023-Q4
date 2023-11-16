@@ -14,8 +14,7 @@ export default function App() {
   useEffect(() => {
     if (errorMsg) throw new Error(errorMsg);
   });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [urlParams, setUrlParams] = useSearchParams();
+  const [, setUrlParams] = useSearchParams();
 
   useEffect(() => {
     localStorage.setItem(StorageValues.Settings, JSON.stringify(params));
