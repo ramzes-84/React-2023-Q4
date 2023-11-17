@@ -12,6 +12,7 @@ export default defineConfig({
     setupFiles: ['src/setupTest.ts'],
     coverage: {
       all: true,
+      provider: 'v8',
       include: ['src/**/*.tsx', 'src/**/*.ts'],
       exclude: [
         'src/components/error-boundary.tsx',
