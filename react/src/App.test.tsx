@@ -83,10 +83,6 @@ vi.spyOn(global, 'fetch').mockImplementation(
   mockedFetch as unknown as FakeResponse
 );
 
-vi.spyOn(global, 'fetch').mockImplementation(
-  mockedFetch as unknown as FakeResponse
-);
-
 describe('App component testing', () => {
   it('Should catch an error', () => {
     // eslint-disable-next-line no-console
