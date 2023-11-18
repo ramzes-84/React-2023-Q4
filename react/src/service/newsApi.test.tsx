@@ -1,14 +1,11 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { newsApi } from './newsApi';
 import { expect, it, describe, vi } from 'vitest';
-import { Provider } from 'react-redux';
-import { store } from '../store/store';
-import { ReactNode } from 'react';
+import { Wrapper } from '../utils/test-utils';
 
-function Wrapper(props: { children: ReactNode }) {
-  return <Provider store={store}>{props.children}</Provider>;
-}
-const mockedFetch = vi.fn();
+const mockedFetch = vi.fn().mockResolvedValue({
+  clone: vi.fn(),
+});
 vi.spyOn(global, 'fetch').mockImplementation(mockedFetch);
 
 describe('', () => {
