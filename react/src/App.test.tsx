@@ -113,4 +113,16 @@ describe('App component testing', () => {
       expect(mockedFetch).toHaveBeenCalled();
     });
   });
+
+  it('Should show message on server error', async () => {
+    render(
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    );
+    await waitFor(() => {
+      const errorMsg = screen.getByText('The server returned an error');
+      expect(errorMsg).toBeInTheDocument();
+    });
+  });
 });
