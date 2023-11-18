@@ -14,11 +14,7 @@ export default defineConfig({
       all: true,
       provider: 'v8',
       include: ['src/**/*.tsx', 'src/**/*.ts'],
-      exclude: [
-        'src/components/error-boundary.tsx',
-        'src/main.tsx',
-        'src/vite-env.d.ts',
-      ],
+      exclude: ['src/main.tsx', 'src/vite-env.d.ts'],
     },
     clearMocks: true,
   },

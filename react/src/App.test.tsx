@@ -88,39 +88,39 @@ vi.spyOn(global, 'fetch').mockImplementation(
 );
 
 describe('App component testing', () => {
-  it('Should catch an error', async () => {
+  it('Should catch an error', () => {
+    // eslint-disable-next-line no-console
+    console.error = vi.fn();
+
     render(
       <Provider store={store}>
         <RouterProvider router={router} />
       </Provider>
     );
     const errorBtn = screen.getByText('Throw error');
-    try {
-      fireEvent.click(errorBtn);
-    } finally {
-      const errorLabel = screen.getByText('Manually', { exact: false });
-      expect(errorLabel).toBeInTheDocument();
-    }
+    fireEvent.click(errorBtn);
+    const errorLabel = screen.getByText('Manually', { exact: false });
+    expect(errorLabel).toBeInTheDocument();
   });
 
-  it('Should call fetch function', async () => {
+  it('Should call fetch function', () => {
     render(
       <Provider store={store}>
         <RouterProvider router={router} />
       </Provider>
     );
-    await waitFor(() => {
+    waitFor(() => {
       expect(mockedFetch).toHaveBeenCalled();
     });
   });
 
-  it('Should show message on server error', async () => {
+  it('Should show message on server error', () => {
     render(
       <Provider store={store}>
         <RouterProvider router={router} />
       </Provider>
     );
-    await waitFor(() => {
+    waitFor(() => {
       const errorMsg = screen.getByText('The server returned an error');
       expect(errorMsg).toBeInTheDocument();
     });
