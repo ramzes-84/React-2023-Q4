@@ -1,107 +1,116 @@
 import { describe, it, expect, vi } from 'vitest';
-import {
-  act,
-  // fireEvent,
-  render,
-  screen,
-  // waitFor,
-} from '@testing-library/react';
+import { createMemoryRouter, RouterProvider } from 'react-router';
+import { ErrorPage } from './components/error-page';
+import { Navigation } from './components/navigation';
+import { SingleView } from './components/single-view';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
-// import { RequestParams } from './types';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
-vi.mock('./components/news-section', () => {
-  return {
-    NewsSection: vi.fn().mockReturnValue(<div>News block</div>),
-  };
+const routes = [
+  {
+    path: '/',
+    element: <Navigation />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '/',
+        element: <App />,
+        children: [
+          {
+            path: 'split/*',
+            element: <SingleView />,
+          },
+        ],
+      },
+      {
+        path: 'article/*',
+        element: <SingleView />,
+      },
+    ],
+  },
+];
+
+const router = createMemoryRouter(routes, {
+  initialEntries: ['/'],
 });
-vi.mock('./components/error-thrower', () => {
-  return {
-    ErrorThrower: vi.fn().mockReturnValue(<div>Error block</div>),
-  };
+
+const response = {
+  status: 'ok',
+  userTier: 'developer',
+  total: 165529,
+  startIndex: 11,
+  pageSize: 10,
+  currentPage: 2,
+  pages: 16553,
+  orderBy: 'relevance',
+  results: [
+    {
+      id: 'us-news/2023/nov/08/israeli-diplomat-bard-college-apartheid-debate',
+      type: 'article',
+      sectionId: 'us-news',
+      sectionName: 'US news',
+      webPublicationDate: '2023-11-08T19:20:46Z',
+      webTitle:
+        'Israeli diplomat pressured US college to drop course on ‘apartheid’ debate',
+      webUrl:
+        'https://www.theguardian.com/us-news/2023/nov/08/israeli-diplomat-bard-college-apartheid-debate',
+      apiUrl:
+        'https://content.guardianapis.com/us-news/2023/nov/08/israeli-diplomat-bard-college-apartheid-debate',
+      isHosted: false,
+      pillarId: 'pillar/news',
+      pillarName: 'News',
+    },
+  ],
+};
+
+type FakeResponse = () => Promise<Promise<Response>>;
+
+const mockedFetch = vi.fn().mockResolvedValue({
+  headers: '',
+  ok: true,
+  redirected: false,
+  statusText: 'ok',
+  type: 'basic',
+  url: 'string',
+  status: 200,
+  clone: vi.fn(),
+  json: () => Promise.resolve({ response }),
 });
-vi.mock('react-router-dom', () => {
-  return {
-    useLocatoin: vi.fn(),
-    useSearchParams: vi.fn().mockReturnValue([{ get: vi.fn() }, vi.fn()]),
-  };
-});
-vi.mock('react-redux', () => {
-  return {
-    useSelector: vi
-      .fn()
-      .mockReturnValue({ q: '', sort: 'newest', limit: '10', page: '1' }),
-    useDispatch: vi.fn().mockReturnValue(vi.fn()),
-  };
-});
 
-export class LocalStorageMock {
-  store: { [key: string]: string };
-  constructor() {
-    this.store = {};
-  }
-  clear() {
-    this.store = {};
-  }
-  getItem(key: string) {
-    return this.store[key] || null;
-  }
-  setItem(key: string, value: string) {
-    this.store[key] = String(value);
-  }
-  removeItem(key: string) {
-    delete this.store[key];
-  }
-  key(n: number) {
-    return Object.keys(this.store)[n];
-  }
-  length: number = 0;
-}
+vi.spyOn(global, 'fetch').mockImplementation(
+  mockedFetch as unknown as FakeResponse
+);
 
-global.localStorage = new LocalStorageMock();
+vi.spyOn(global, 'fetch').mockImplementation(
+  mockedFetch as unknown as FakeResponse
+);
 
-describe('App component ', () => {
-  it('Should render basic elements: search, news & error thrower', () => {
-    act(() => {
-      render(<App />);
-    });
-
-    const searchBox = screen.getByRole('textbox');
-    const news = screen.getByText('News block');
-    const errorBtn = screen.getByText('Error block');
-
-    expect(searchBox).toBeInTheDocument();
-    expect(news).toBeInTheDocument();
-    expect(errorBtn).toBeInTheDocument();
+describe('App component testing', () => {
+  it('Should catch an error', async () => {
+    render(
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    );
+    const errorBtn = screen.getByText('Throw error');
+    try {
+      fireEvent.click(errorBtn);
+    } finally {
+      const errorLabel = screen.getByText('Manually', { exact: false });
+      expect(errorLabel).toBeInTheDocument();
+    }
   });
 
-  // it('Check that the component retrieves the value from the local storage upon mounting', async () => {
-  //   global.localStorage.setItem(
-  //     'settings',
-  //     JSON.stringify({ limit: '10', q: 'football', sort: 'newest', page: '1' })
-  //   );
-  //   render(<App />);
-
-  //   await waitFor(() => {
-  //     const searchBox = screen.getByRole('textbox');
-
-  //     expect((searchBox as HTMLInputElement).value).toEqual('football');
-  //   });
-  // });
-
-  // it('Verify that clicking the Search button saves the entered value to the local storage', async () => {
-  //   render(<App />);
-  //   const searchBox: HTMLInputElement = screen.getByRole('textbox');
-  //   const searchBtn: HTMLInputElement = screen.getByText('Search');
-
-  //   searchBox.value = 'car';
-
-  //   fireEvent.click(searchBtn);
-
-  //   await waitFor(() => {
-  //     const LSSettings = JSON.parse(
-  //       global.localStorage.getItem('settings') as string
-  //     );
-  //     expect((LSSettings as RequestParams).q).toEqual('car');
-  //   });
-  // });
+  it('Should call fetch function', async () => {
+    render(
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    );
+    await waitFor(() => {
+      expect(mockedFetch).toHaveBeenCalled();
+    });
+  });
 });
