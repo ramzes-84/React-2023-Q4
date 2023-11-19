@@ -7,10 +7,8 @@ import {
   afterEach,
   afterAll,
 } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { NewsSection } from './news-section';
-import { Provider } from 'react-redux';
-import { store } from '../store/store';
 import { RouterProvider, createMemoryRouter } from 'react-router';
 import { Wrapper, server } from '../utils/test-utils';
 
@@ -45,18 +43,5 @@ describe('NewsSection component', () => {
 
     const spinner = screen.getByText('Spinner');
     expect(spinner).toBeInTheDocument();
-  });
-
-  it('Should show error message on server error', async () => {
-    render(
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
-    );
-    await waitFor(() => {
-      expect(
-        screen.getByText('The server returned an error')
-      ).toBeInTheDocument();
-    });
   });
 });

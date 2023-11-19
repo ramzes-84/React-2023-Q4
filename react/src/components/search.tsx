@@ -3,6 +3,7 @@ import { AppUrlParams, PageLimitValue, RequestParams, Sort } from '../types';
 import { RootState } from '../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { paramsSlice } from '../store/params-slice';
+import { newsLoaderSlice } from '../store/loaders-slice';
 
 export function Search() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export function Search() {
         setSorting(e.target.value as Sort);
         break;
     }
+    dispatch(newsLoaderSlice.actions.isLoadingNews(true));
     dispatch(paramsSlice.actions.updateParams(newParams));
   };
 
@@ -44,6 +46,7 @@ export function Search() {
         page: '1',
         details: '0',
       };
+      dispatch(newsLoaderSlice.actions.isLoadingNews(true));
       dispatch(paramsSlice.actions.updateParams(newParams));
     } else throw new Error('The form isn`t complete');
   };

@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { AppReduxState } from '../types';
 
 const initialValue: AppReduxState<boolean> = {
-  value: false,
+  value: true,
 };
 
 export const newsLoaderSlice = createSlice({

@@ -2,28 +2,20 @@ import { ArticleCard } from './article-card';
 import { Spinner } from './spinner';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { Pagination } from './pagination';
-import { newsApi } from '../service/newsApi';
-import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { useSelector } from 'react-redux';
 
 export function NewsSection() {
   const URLParams = useParams();
   const isSplitView = !!URLParams['*'];
-  const params = useSelector((state: RootState) => state.params.value);
-  const { data, isError, isLoading } = newsApi.useGetNewsQuery(params);
+  const isLoading = useSelector((state: RootState) => state.newsLoader.value);
+  const data = useSelector((state: RootState) => state.news.news);
 
   if (isLoading) {
     return <Spinner />;
   }
-  if (isError) {
-    return (
-      <main className="bg-yellow-200 p-6 mx-4 rounded-xl text-center">
-        The server returned an error
-      </main>
-    );
-  }
-  if (data && data.results.length > 0) {
-    const newsCards = data.results.map((article) => (
+  if (data && data.length > 0) {
+    const newsCards = data.map((article) => (
       <ArticleCard key={article.id} article={article} />
     ));
     return (
@@ -52,7 +44,7 @@ export function NewsSection() {
         <Pagination />
       </>
     );
-  } else if (data && data.results.length === 0) {
+  } else if (data && data.length === 0) {
     return (
       <main className="bg-yellow-200 p-6 mx-4 rounded-xl text-center">
         Nothing was found

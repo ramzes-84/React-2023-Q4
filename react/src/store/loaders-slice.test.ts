@@ -4,7 +4,7 @@ import { articleLoaderSlice, newsLoaderSlice } from './loaders-slice';
 describe('News loader slice testing', () => {
   it('Should return the initial state', () => {
     expect(newsLoaderSlice.reducer(undefined, { type: undefined })).toEqual({
-      value: false,
+      value: true,
     });
   });
 
@@ -23,7 +23,7 @@ describe('News loader slice testing', () => {
 describe('Article loader slice testing', () => {
   it('Should return the initial state', () => {
     expect(articleLoaderSlice.reducer(undefined, { type: undefined })).toEqual({
-      value: false,
+      value: true,
     });
   });
 

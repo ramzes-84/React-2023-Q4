@@ -4,6 +4,7 @@ import { PagesBtn } from './page-button';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { paramsSlice } from '../store/params-slice';
+import { newsLoaderSlice } from '../store/loaders-slice';
 
 export function Pagination() {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ export function Pagination() {
     if (e.target instanceof HTMLInputElement) {
       const newPage = e.target.value;
       const newConfig = { ...params, page: newPage };
+      dispatch(newsLoaderSlice.actions.isLoadingNews(true));
       dispatch(paramsSlice.actions.updateParams(newConfig));
     } else throw new Error('Clicked button is not an input');
   }
