@@ -7,6 +7,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { articleResponse } from './utils/test-data';
 
 const routes = [
   {
@@ -45,24 +46,7 @@ const response = {
   currentPage: 2,
   pages: 16553,
   orderBy: 'relevance',
-  results: [
-    {
-      id: 'us-news/2023/nov/08/israeli-diplomat-bard-college-apartheid-debate',
-      type: 'article',
-      sectionId: 'us-news',
-      sectionName: 'US news',
-      webPublicationDate: '2023-11-08T19:20:46Z',
-      webTitle:
-        'Israeli diplomat pressured US college to drop course on ‘apartheid’ debate',
-      webUrl:
-        'https://www.theguardian.com/us-news/2023/nov/08/israeli-diplomat-bard-college-apartheid-debate',
-      apiUrl:
-        'https://content.guardianapis.com/us-news/2023/nov/08/israeli-diplomat-bard-college-apartheid-debate',
-      isHosted: false,
-      pillarId: 'pillar/news',
-      pillarName: 'News',
-    },
-  ],
+  results: [articleResponse],
 };
 
 type FakeResponse = () => Promise<Promise<Response>>;
