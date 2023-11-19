@@ -3,8 +3,11 @@ import { useEffect, useRef } from 'react';
 import { Spinner } from './spinner';
 import { CloseBtn } from './close-btn';
 import { newsApi } from '../service/newsApi';
+import { articleLoaderSlice } from '../store/loaders-slice';
+import { useDispatch } from 'react-redux';
 
 export const SingleView = () => {
+  const dispatch = useDispatch();
   const params = useParams();
   const ref = useRef<HTMLElement | null>(null);
   const { data, isError, isLoading } = newsApi.useGetArticleQuery(
@@ -13,6 +16,7 @@ export const SingleView = () => {
 
   useEffect(() => {
     ref?.current?.scrollIntoView({ behavior: 'smooth' });
+    dispatch(articleLoaderSlice.actions.isLoadingArticle(isLoading));
   });
 
   return (

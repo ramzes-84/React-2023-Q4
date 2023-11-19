@@ -20,6 +20,8 @@ vi.mock('react', async () => {
   };
 });
 
+vi.mock('react-redux');
+
 vi.mock('./spinner', () => {
   return {
     Spinner: vi.fn().mockReturnValue(<div>Spinner</div>),
