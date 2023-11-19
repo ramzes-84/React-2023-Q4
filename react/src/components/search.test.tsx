@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Search } from './search';
-import { PageLimitValue } from '../types';
+import { PageLimitValue, Sort } from '../types';
 
 vi.mock('react-redux', () => {
   return {
@@ -27,7 +27,7 @@ describe('Search component', () => {
     expect(selectSort).toBeInTheDocument();
   });
 
-  it('Changing search params should trigger params setting', () => {
+  it('Changing items per page param should trigger params setting', () => {
     render(<Search />);
 
     const selectLimit: HTMLSelectElement =
@@ -35,5 +35,17 @@ describe('Search component', () => {
     fireEvent.change(selectLimit, { target: { value: PageLimitValue.fifty } });
 
     expect(selectLimit.value).toEqual('50');
+  });
+
+  it('Changing sort param should trigger params setting', () => {
+    render(<Search />);
+
+    const orderSelect: HTMLSelectElement =
+      screen.getByText('Show newest first');
+    expect(orderSelect).toBeInTheDocument();
+
+    fireEvent.change(orderSelect, { target: { value: Sort.Relevance } });
+
+    expect(orderSelect.value).toEqual('relevance');
   });
 });

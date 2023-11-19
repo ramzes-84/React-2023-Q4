@@ -5,9 +5,9 @@ import { Navigation } from './components/navigation';
 import { SingleView } from './components/single-view';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from './App';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
 import { articleResponse } from './utils/test-data';
+import { Wrapper } from './utils/test-utils';
+import { PageLimitValue, Sort } from './types';
 
 const routes = [
   {
@@ -73,9 +73,9 @@ describe('App component testing', () => {
     console.error = vi.fn();
 
     render(
-      <Provider store={store}>
+      <Wrapper>
         <RouterProvider router={router} />
-      </Provider>
+      </Wrapper>
     );
     const errorBtn = screen.getByText('Throw error');
     fireEvent.click(errorBtn);
@@ -83,26 +83,64 @@ describe('App component testing', () => {
     expect(errorLabel).toBeInTheDocument();
   });
 
-  it('Should call fetch function', () => {
+  it('Should call fetch function', async () => {
     render(
-      <Provider store={store}>
+      <Wrapper>
         <RouterProvider router={router} />
-      </Provider>
+      </Wrapper>
     );
-    waitFor(() => {
-      expect(mockedFetch).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockedFetch).toHaveBeenCalledTimes(1);
     });
   });
 
   it('Should show message on server error', () => {
     render(
-      <Provider store={store}>
+      <Wrapper>
         <RouterProvider router={router} />
-      </Provider>
+      </Wrapper>
     );
     waitFor(() => {
       const errorMsg = screen.getByText('The server returned an error');
       expect(errorMsg).toBeInTheDocument();
+    });
+  });
+
+  it('Should call fetch on items per page change', async () => {
+    render(
+      <Wrapper>
+        <RouterProvider router={router} />
+      </Wrapper>
+    );
+    const perPageSelector: HTMLSelectElement =
+      screen.getByText('10 items per page');
+    expect(perPageSelector).toBeInTheDocument();
+
+    fireEvent.change(perPageSelector, {
+      target: { value: PageLimitValue.fifty },
+    });
+
+    await waitFor(() => {
+      expect(mockedFetch).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('Should call fetch on sort change', async () => {
+    render(
+      <Wrapper>
+        <RouterProvider router={router} />
+      </Wrapper>
+    );
+    const sortSelector: HTMLSelectElement =
+      screen.getByText('Show newest first');
+    expect(sortSelector).toBeInTheDocument();
+
+    fireEvent.change(sortSelector, {
+      target: { value: Sort.Relevance },
+    });
+
+    await waitFor(() => {
+      expect(mockedFetch).toHaveBeenCalledTimes(1);
     });
   });
 });
