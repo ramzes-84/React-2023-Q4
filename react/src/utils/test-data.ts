@@ -1,4 +1,10 @@
-import { ArticleInCatalog } from '../types';
+import {
+  AppUrlParams,
+  ArticleInCatalog,
+  PageLimitValue,
+  RequestParams,
+  Sort,
+} from '../types';
 
 export const articleResponse: ArticleInCatalog = {
   id: 'id',
@@ -41,4 +47,12 @@ export const articleResponse: ArticleInCatalog = {
     newspaperPageNumber: '',
     newspaperEditionDate: '',
   },
+};
+
+export const testParams: RequestParams = {
+  [AppUrlParams.Details]: '0',
+  [AppUrlParams.Limit]: PageLimitValue.ten,
+  [AppUrlParams.Page]: '1',
+  [AppUrlParams.Query]: '',
+  [AppUrlParams.Sort]: Sort.Newest,
 };
