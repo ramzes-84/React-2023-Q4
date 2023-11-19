@@ -4,9 +4,11 @@ import { paramsSlice } from './params-slice';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { newsApi } from '../service/newsApi';
 import { articleLoaderSlice, newsLoaderSlice } from './loaders-slice';
+import { newsSlice } from './news-slice';
 
 export const store = configureStore({
   reducer: {
+    news: newsSlice.reducer,
     totalPages: totalPagesSlice.reducer,
     newsLoader: newsLoaderSlice.reducer,
     articleLoader: articleLoaderSlice.reducer,
