@@ -1,5 +1,3 @@
-"use client";
-
 import { ErrorThrower } from "@/components/error-thrower";
 import { NewsSection } from "@/components/news-section";
 import { Search } from "@/components/search";
