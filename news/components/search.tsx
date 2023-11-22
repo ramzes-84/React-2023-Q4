@@ -1,9 +1,14 @@
-import { ChangeEvent, useState } from 'react';
-import { AppUrlParams, PageLimitValue, RequestParams, Sort } from '../types';
-import { RootState } from '../store/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { paramsSlice } from '../store/params-slice';
-import { newsLoaderSlice } from '../store/loaders-slice';
+import { ChangeEvent, useState } from "react";
+import {
+  AppUrlParams,
+  PageLimitValue,
+  RequestParams,
+  Sort,
+} from "../utils/types";
+import { RootState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { paramsSlice } from "../store/params-slice";
+import { newsLoaderSlice } from "../store/loaders-slice";
 
 export function Search() {
   const dispatch = useDispatch();
@@ -17,7 +22,7 @@ export function Search() {
     const newParams = {
       ...params,
       [e.target.name]: e.target.value,
-      page: '1',
+      page: "1",
     };
     switch (e.target.name) {
       case AppUrlParams.Limit:
@@ -43,12 +48,12 @@ export function Search() {
         limit: formValues.get(AppUrlParams.Limit) as PageLimitValue,
         q: formValues.get(AppUrlParams.Query) as string,
         sort: formValues.get(AppUrlParams.Sort) as Sort,
-        page: '1',
-        details: '0',
+        page: "1",
+        details: "0",
       };
       dispatch(newsLoaderSlice.actions.isLoadingNews(true));
       dispatch(paramsSlice.actions.updateParams(newParams));
-    } else throw new Error('The form isn`t complete');
+    } else throw new Error("The form isn`t complete");
   };
 
   return (

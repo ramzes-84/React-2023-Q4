@@ -1,13 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { AppReduxState } from '../types';
+import { AppReduxState } from "@/utils/types";
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 
 const initialValue: AppReduxState<boolean> = {
   value: true,
 };
 
 export const newsLoaderSlice = createSlice({
-  name: 'newsLoader',
+  name: "newsLoader",
   initialState: initialValue,
   reducers: {
     isLoadingNews: (state, action: PayloadAction<boolean>) => {
@@ -17,7 +17,7 @@ export const newsLoaderSlice = createSlice({
 });
 
 export const articleLoaderSlice = createSlice({
-  name: 'articleLoader',
+  name: "articleLoader",
   initialState: initialValue,
   reducers: {
     isLoadingArticle: (state, action: PayloadAction<boolean>) => {

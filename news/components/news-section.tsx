@@ -1,13 +1,14 @@
-import { ArticleCard } from './article-card';
-import { Spinner } from './spinner';
-import { Link, Outlet, useParams } from 'react-router-dom';
-import { Pagination } from './pagination';
-import { RootState } from '../store/store';
-import { useSelector } from 'react-redux';
+import { ArticleCard } from "./article-card";
+import { Spinner } from "./spinner";
+import { Pagination } from "./pagination";
+import { useSelector } from "react-redux";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { RootState } from "@/store/store";
+import { AppUrlParams } from "@/utils/types";
 
 export function NewsSection() {
-  const URLParams = useParams();
-  const isSplitView = !!URLParams['*'];
+  const detailsFlag = !!useSearchParams().get(AppUrlParams.Details);
   const isLoading = useSelector((state: RootState) => state.newsLoader.value);
   const data = useSelector((state: RootState) => state.news.news);
 
@@ -23,22 +24,22 @@ export function NewsSection() {
         <main className="flex flex-row relative">
           <section
             className={
-              'flex flex-col gap-3 m-2 px-2 mx-auto ' +
-              (isSplitView ? 'max-w-[50%]' : 'max-w-4xl')
+              "flex flex-col gap-3 m-2 px-2 mx-auto " +
+              (detailsFlag ? "max-w-[50%]" : "max-w-4xl")
             }
           >
             {newsCards}
           </section>
           <Link
-            to={'/'}
+            href={"/"}
             className={
-              isSplitView
-                ? 'absolute w-[50%] h-[100%] left-0 top-0 bg-slate-950/20 cursor-ew-resize'
-                : 'hidden'
+              detailsFlag
+                ? "absolute w-[50%] h-[100%] left-0 top-0 bg-slate-950/20 cursor-ew-resize"
+                : "hidden"
             }
           />
-          <section className={isSplitView ? 'w-[50%]' : 'hidden'}>
-            <Outlet />
+          <section className={detailsFlag ? "w-[50%]" : "hidden"}>
+            {detailsFlag && <div>Sidebar</div>}
           </section>
         </main>
         <Pagination />

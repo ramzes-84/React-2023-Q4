@@ -1,10 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { totalPagesSlice } from './total-pages-slice';
-import { paramsSlice } from './params-slice';
-import { setupListeners } from '@reduxjs/toolkit/query';
-import { newsApi } from '../service/newsApi';
-import { articleLoaderSlice, newsLoaderSlice } from './loaders-slice';
-import { newsSlice } from './news-slice';
+import { configureStore } from "@reduxjs/toolkit";
+import { totalPagesSlice } from "./total-pages-slice";
+import { paramsSlice } from "./params-slice";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { newsApi } from "../service/newsApi";
+import { articleLoaderSlice, newsLoaderSlice } from "./loaders-slice";
+import { newsSlice } from "./news-slice";
 
 export const store = configureStore({
   reducer: {

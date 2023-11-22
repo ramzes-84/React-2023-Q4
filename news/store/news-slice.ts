@@ -1,6 +1,6 @@
+import { ArticleInCatalog } from '@/utils/types';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { ArticleInCatalog } from '../types';
 
 export interface NewsState {
   news: ArticleInCatalog[];

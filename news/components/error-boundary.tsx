@@ -1,6 +1,6 @@
-import { Component } from 'react';
-import { AppProps } from '../types';
-import { Navigation } from './navigation';
+import { Component } from "react";
+import { AppProps } from "../utils/types";
+import { Navigation } from "./navigation";
 
 type ErrorState = {
   hasError: boolean;
@@ -8,7 +8,7 @@ type ErrorState = {
 };
 
 export class ErrorBoundary extends Component<AppProps, ErrorState> {
-  state: ErrorState = { hasError: false, message: '' };
+  state: ErrorState = { hasError: false, message: "" };
 
   static getDerivedStateFromError(error: string) {
     return { hasError: true, message: error };

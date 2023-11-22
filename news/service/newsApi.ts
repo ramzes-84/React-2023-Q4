@@ -1,29 +1,29 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   Article,
   ArticleInCatalog,
   ArticleResponse,
   NewsResponse,
   RequestParams,
-} from '../types';
+} from "../../react/src/types";
 
-const API_KEY = 'b0706de8-b3da-4a9b-ac07-af4a3fec399a';
-const NEWS_ENDPOINT = 'search';
-const ENDPOINT = 'https://content.guardianapis.com/';
+const API_KEY = "b0706de8-b3da-4a9b-ac07-af4a3fec399a";
+const NEWS_ENDPOINT = "search";
+const ENDPOINT = "https://content.guardianapis.com/";
 const enum NewsUrlQuery {
-  q = 'q',
-  sort = 'order-by',
-  limit = 'page-size',
-  page = 'page',
-  additionalFields = 'show-fields',
-  apiKey = 'api-key',
+  q = "q",
+  sort = "order-by",
+  limit = "page-size",
+  page = "page",
+  additionalFields = "show-fields",
+  apiKey = "api-key",
 }
 const enum AdditionalFields {
-  all = 'all',
+  all = "all",
 }
 
 export const newsApi = createApi({
-  reducerPath: 'newsApi',
+  reducerPath: "newsApi",
   baseQuery: fetchBaseQuery({ baseUrl: ENDPOINT }),
   endpoints: (builder) => ({
     getNews: builder.query<NewsResponse<ArticleInCatalog[]>, RequestParams>({

@@ -1,24 +1,20 @@
-import { useNavigate } from 'react-router-dom';
-import { ArticleInCatalog } from '../types';
+import Image from "next/image";
+import { ArticleInCatalog } from "../utils/types";
+import Link from "next/link";
 
 interface ArticleCardProps {
   article: ArticleInCatalog;
 }
 
 export function ArticleCard({ article }: ArticleCardProps) {
-  const navigation = useNavigate();
-
   return (
     <div className="flex flex-row border rounded-2xl border-slate-500 overflow-hidden">
-      <div
-        onClick={() => navigation(`/split/${article.id}`)}
-        className="flex flex-row"
-      >
-        <img
+      <Link href={`/split/${article.id}`} className="flex flex-row">
+        <Image
           className="hidden sm:block"
           width={320}
           height={144}
-          src={article.fields.thumbnail || '/no-image.png'}
+          src={article.fields.thumbnail || "/no-image.png"}
           alt="photo"
         />
         <div className="flex flex-col p-2 grow">
@@ -30,20 +26,20 @@ export function ArticleCard({ article }: ArticleCardProps) {
             <p className="p-1 grow">Category: {article.sectionName}</p>
           </div>
         </div>
-      </div>
+      </Link>
       <div className="flex flex-col justify-evenly">
-        <div
-          onClick={() => navigation(`/split/${article.id}`)}
+        <Link
+          href={`/split/${article.id}`}
           className="px-3 text-white grow	bg-slate-300"
         >
           <button>&#128269;</button>
-        </div>
-        <div
-          onClick={() => navigation(`/article/${article.id}`)}
+        </Link>
+        <Link
+          href={`/article/${article.id}`}
           className="px-3 text-white grow	bg-slate-400"
         >
           <button>&#8599;</button>
-        </div>
+        </Link>
         <a
           href={article.webUrl}
           target="_blank"
