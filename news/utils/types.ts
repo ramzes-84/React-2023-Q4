@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 export interface AppProps {
   children?: ReactNode;
@@ -9,29 +9,29 @@ export type RequestParams = {
   sort: Sort;
   page: string;
   q: string;
-  details: '1' | '0';
+  details: "1" | "0";
 };
 
 export enum Sort {
-  Newest = 'newest',
-  Oldest = 'oldest',
-  Relevance = 'relevance',
+  Newest = "newest",
+  Oldest = "oldest",
+  Relevance = "relevance",
 }
 
 export enum AppUrlParams {
-  Query = 'q',
-  Limit = 'limit',
-  Page = 'page',
-  Sort = 'sort',
-  Details = 'details',
+  Query = "q",
+  Limit = "limit",
+  Page = "page",
+  Sort = "sort",
+  Details = "details",
 }
 
 export enum PageLimitValue {
-  ten = '10',
-  twenty = '20',
-  thirty = '30',
-  fourty = '40',
-  fifty = '50',
+  ten = "10",
+  twenty = "20",
+  thirty = "30",
+  fourty = "40",
+  fifty = "50",
 }
 
 export type ArticleInCatalog = {
@@ -57,7 +57,7 @@ export type AppState = {
 };
 
 export enum StorageValues {
-  Settings = 'settings',
+  Settings = "settings",
 }
 
 export type Article = {
