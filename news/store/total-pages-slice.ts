@@ -1,6 +1,7 @@
 import { AppReduxState } from "@/utils/types";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+// import { HYDRATE } from "next-redux-wrapper";
 
 const initialReduxTotalPages: AppReduxState<number> = { value: 1 };
 
@@ -12,4 +13,12 @@ export const totalPagesSlice = createSlice({
       state.value = action.payload;
     },
   },
+  // extraReducers: {
+  //   [HYDRATE]: (state, action: PayloadAction<number>) => {
+  //     return {
+  //       ...state,
+  //       ...action.payload,
+  //     };
+  //   },
+  // },
 });

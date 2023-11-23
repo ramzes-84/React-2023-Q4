@@ -1,11 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
-  Article,
-  ArticleInCatalog,
-  ArticleResponse,
   NewsResponse,
+  ArticleInCatalog,
   RequestParams,
-} from "../../react/src/types";
+  Article,
+  ArticleResponse,
+} from "@/utils/types";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const API_KEY = "b0706de8-b3da-4a9b-ac07-af4a3fec399a";
 const NEWS_ENDPOINT = "search";
