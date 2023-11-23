@@ -1,14 +1,24 @@
 import { Navigation } from "@/components/navigation";
-import { store } from "@/store/store";
+import { store, wrapper } from "@/store/store";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { Provider } from "react-redux";
+import { default as AbortController } from "abort-controller";
 
-export default function App({ Component, pageProps }: AppProps) {
+Object.assign(globalThis, {
+  fetch,
+  Headers,
+  Request,
+  Response,
+  AbortController,
+});
+
+export function App({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
+    <>
       <Navigation />
       <Component {...pageProps} />
-    </Provider>
+    </>
   );
 }
+
+export default wrapper.withRedux(App);

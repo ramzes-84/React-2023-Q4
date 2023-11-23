@@ -6,6 +6,7 @@ import {
   ArticleResponse,
 } from "@/utils/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { HYDRATE } from "next-redux-wrapper";
 
 const API_KEY = "b0706de8-b3da-4a9b-ac07-af4a3fec399a";
 const NEWS_ENDPOINT = "search";
@@ -25,6 +26,11 @@ const enum AdditionalFields {
 export const newsApi = createApi({
   reducerPath: "newsApi",
   baseQuery: fetchBaseQuery({ baseUrl: ENDPOINT }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: (builder) => ({
     getNews: builder.query<NewsResponse<ArticleInCatalog[]>, RequestParams>({
       query: (params) => ({
@@ -56,3 +62,11 @@ export const newsApi = createApi({
     }),
   }),
 });
+
+export const {
+  useGetNewsQuery,
+  useGetArticleQuery,
+  util: { getRunningQueriesThunk },
+} = newsApi;
+
+export const { getNews, getArticle } = newsApi.endpoints;

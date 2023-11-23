@@ -24,7 +24,6 @@ export class ApiService {
 
   public async getCurrentArticle(id: string): Promise<Article> {
     const url = `${ARTICLE_ENDPOINT}${id}?api-key=${API_KEY}&show-fields=all`;
-    console.log(url);
     const response = await fetch(url);
     if (response.status === 200) {
       const resFromJSON = await response.json();
