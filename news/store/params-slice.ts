@@ -10,6 +10,7 @@ import {
   StorageValues,
 } from "@/utils/types";
 import { useSearchParams } from "next/navigation";
+import { HYDRATE } from "next-redux-wrapper";
 
 const initialParams: AppReduxState<RequestParams> = {
   value: {
@@ -27,6 +28,15 @@ export const paramsSlice = createSlice({
   reducers: {
     updateParams: (state, action: PayloadAction<RequestParams>) => {
       state.value = action.payload;
+    },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      console.log("HYDRATE", state, action.payload);
+      return {
+        ...state,
+        ...action.payload.params,
+      };
     },
   },
 });

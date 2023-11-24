@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { totalPagesSlice } from "./total-pages-slice";
 import { paramsSlice } from "./params-slice";
 import { newsApi } from "../service/newsApi";
@@ -23,5 +23,11 @@ export const store = () =>
 export type AppStore = ReturnType<typeof store>;
 export type RootState = ReturnType<AppStore["getState"]>;
 export type AppDispatch = AppStore["dispatch"];
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action
+>;
 
 export const wrapper = createWrapper<AppStore>(store, { debug: true });

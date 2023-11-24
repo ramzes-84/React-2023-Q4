@@ -4,8 +4,22 @@ import { Pagination } from "./pagination";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { RootState } from "@/store/store";
+import { RootState, wrapper } from "@/store/store";
 import { AppUrlParams } from "@/utils/types";
+import { getArticle, getRunningQueriesThunk } from "@/service/newsApi";
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) => async (context) => {
+//     const id = (context.params?.id as string[]).join("/");
+//     store.dispatch(getArticle.initiate(id));
+
+//     await Promise.all(store.dispatch(getRunningQueriesThunk()));
+
+//     return {
+//       props: {},
+//     };
+//   }
+// );
 
 export function NewsSection() {
   const detailsFlag = !!useSearchParams().get(AppUrlParams.Details);
