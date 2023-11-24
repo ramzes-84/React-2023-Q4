@@ -11,7 +11,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
     <div className="flex flex-row border rounded-2xl border-slate-500 overflow-hidden">
       <Link href={`/split/${article.id}?details=1`} className="flex flex-row">
         <Image
-          className="hidden sm:block"
+          className="hidden sm:block h-auto w-auto"
           width={320}
           height={144}
           src={article.fields.thumbnail || "/no-image.png"}
