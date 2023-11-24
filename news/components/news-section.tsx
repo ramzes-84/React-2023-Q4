@@ -1,30 +1,59 @@
 import { ArticleCard } from "./article-card";
 import { Spinner } from "./spinner";
 import { Pagination } from "./pagination";
-import { useSelector } from "react-redux";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { RootState, wrapper } from "@/store/store";
-import { AppUrlParams } from "@/utils/types";
-import { getArticle, getRunningQueriesThunk } from "@/service/newsApi";
+import { AppUrlParams, PageLimitValue, Sort } from "@/utils/types";
+import {
+  getNews,
+  getRunningQueriesThunk,
+  useGetNewsQuery,
+} from "@/service/newsApi";
+import { useRouter } from "next/dist/client/router";
+import { useAppSelector } from "@/store/hooks";
+import { SingleView } from "./single-view";
 
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) => async (context) => {
-//     const id = (context.params?.id as string[]).join("/");
-//     store.dispatch(getArticle.initiate(id));
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    store.dispatch(
+      getNews.initiate({
+        [AppUrlParams.Details]: "0",
+        [AppUrlParams.Limit]: PageLimitValue.ten,
+        [AppUrlParams.Page]: "1",
+        [AppUrlParams.Query]: "",
+        [AppUrlParams.Sort]: Sort.Newest,
+      })
+    );
 
-//     await Promise.all(store.dispatch(getRunningQueriesThunk()));
+    await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
-//     return {
-//       props: {},
-//     };
-//   }
-// );
+    return {
+      props: {},
+    };
+  }
+);
 
 export function NewsSection() {
+  const router = useRouter();
+  const result = useGetNewsQuery(
+    {
+      [AppUrlParams.Details]: "0",
+      [AppUrlParams.Limit]: PageLimitValue.ten,
+      [AppUrlParams.Page]: "1",
+      [AppUrlParams.Query]: "",
+      [AppUrlParams.Sort]: Sort.Newest,
+    },
+    {
+      skip: router.isFallback,
+    }
+  );
+
   const detailsFlag = !!useSearchParams().get(AppUrlParams.Details);
-  const isLoading = useSelector((state: RootState) => state.newsLoader.value);
-  const data = useSelector((state: RootState) => state.news.news);
+  const isLoading = useAppSelector(
+    (state: RootState) => state.newsLoader.value
+  );
+  const data = useAppSelector((state: RootState) => state.news.news);
 
   if (isLoading) {
     return <Spinner />;
@@ -53,7 +82,7 @@ export function NewsSection() {
             }
           />
           <section className={detailsFlag ? "w-[50%]" : "hidden"}>
-            {detailsFlag && <div>Sidebar</div>}
+            {detailsFlag && <SingleView />}
           </section>
         </main>
         <Pagination />

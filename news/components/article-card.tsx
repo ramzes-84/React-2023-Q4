@@ -9,7 +9,7 @@ interface ArticleCardProps {
 export function ArticleCard({ article }: ArticleCardProps) {
   return (
     <div className="flex flex-row border rounded-2xl border-slate-500 overflow-hidden">
-      <Link href={`/split/${article.id}`} className="flex flex-row">
+      <Link href={`/split/${article.id}?details=1`} className="flex flex-row">
         <Image
           className="hidden sm:block"
           width={320}
