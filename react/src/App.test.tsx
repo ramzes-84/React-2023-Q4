@@ -1,32 +1,32 @@
-import { describe, it, expect, vi } from 'vitest';
-import { createMemoryRouter, RouterProvider } from 'react-router';
-import { ErrorPage } from './components/error-page';
-import { Navigation } from './components/navigation';
-import { SingleView } from './components/single-view';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import App from './App';
-import { articleResponse } from './utils/test-data';
-import { Wrapper } from './utils/test-utils';
-import { PageLimitValue, Sort } from './types';
+import { describe, it, expect, vi } from "vitest";
+import { createMemoryRouter, RouterProvider } from "react-router";
+import { ErrorPage } from "./components/error-page";
+import { Navigation } from "./components/navigation";
+import { SingleView } from "./components/single-view";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import App from "./App";
+import { articleResponse } from "./utils/test-data";
+import { Wrapper } from "./utils/test-utils";
+import { PageLimitValue, Sort } from "./types";
 
 const routes = [
   {
-    path: '/',
+    path: "/",
     element: <Navigation />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <App />,
         children: [
           {
-            path: 'split/*',
+            path: "split/*",
             element: <SingleView />,
           },
         ],
       },
       {
-        path: 'article/*',
+        path: "article/*",
         element: <SingleView />,
       },
     ],
@@ -34,41 +34,41 @@ const routes = [
 ];
 
 const router = createMemoryRouter(routes, {
-  initialEntries: ['/'],
+  initialEntries: ["/"],
 });
 
 const response = {
-  status: 'ok',
-  userTier: 'developer',
+  status: "ok",
+  userTier: "developer",
   total: 165529,
   startIndex: 11,
   pageSize: 10,
   currentPage: 2,
   pages: 16553,
-  orderBy: 'relevance',
+  orderBy: "relevance",
   results: [articleResponse],
 };
 
 type FakeResponse = () => Promise<Promise<Response>>;
 
 const mockedFetch = vi.fn().mockResolvedValue({
-  headers: '',
+  headers: "",
   ok: true,
   redirected: false,
-  statusText: 'ok',
-  type: 'basic',
-  url: 'string',
+  statusText: "ok",
+  type: "basic",
+  url: "string",
   status: 200,
   clone: vi.fn(),
   json: () => Promise.resolve({ response }),
 });
 
-vi.spyOn(global, 'fetch').mockImplementation(
+vi.spyOn(global, "fetch").mockImplementation(
   mockedFetch as unknown as FakeResponse
 );
 
-describe('App component testing', () => {
-  it('Should catch an error', () => {
+describe("App component testing", () => {
+  it("Should catch an error", () => {
     // eslint-disable-next-line no-console
     console.error = vi.fn();
 
@@ -77,13 +77,13 @@ describe('App component testing', () => {
         <RouterProvider router={router} />
       </Wrapper>
     );
-    const errorBtn = screen.getByText('Throw error');
+    const errorBtn = screen.getByText("Throw error");
     fireEvent.click(errorBtn);
-    const errorLabel = screen.getByText('Manually', { exact: false });
+    const errorLabel = screen.getByText("Manually", { exact: false });
     expect(errorLabel).toBeInTheDocument();
   });
 
-  it('Should call fetch function', async () => {
+  it("Should call fetch function", async () => {
     render(
       <Wrapper>
         <RouterProvider router={router} />
@@ -94,26 +94,26 @@ describe('App component testing', () => {
     });
   });
 
-  it('Should show message on server error', () => {
+  it("Should show message on server error", () => {
     render(
       <Wrapper>
         <RouterProvider router={router} />
       </Wrapper>
     );
     waitFor(() => {
-      const errorMsg = screen.getByText('The server returned an error');
+      const errorMsg = screen.getByText("The server returned an error");
       expect(errorMsg).toBeInTheDocument();
     });
   });
 
-  it('Should call fetch on items per page change', async () => {
+  it("Should call fetch on items per page change", async () => {
     render(
       <Wrapper>
         <RouterProvider router={router} />
       </Wrapper>
     );
     const perPageSelector: HTMLSelectElement =
-      screen.getByText('10 items per page');
+      screen.getByText("10 items per page");
     expect(perPageSelector).toBeInTheDocument();
 
     fireEvent.change(perPageSelector, {
@@ -125,14 +125,14 @@ describe('App component testing', () => {
     });
   });
 
-  it('Should call fetch on sort change', async () => {
+  it("Should call fetch on sort change", async () => {
     render(
       <Wrapper>
         <RouterProvider router={router} />
       </Wrapper>
     );
     const sortSelector: HTMLSelectElement =
-      screen.getByText('Show newest first');
+      screen.getByText("Show newest first");
     expect(sortSelector).toBeInTheDocument();
 
     fireEvent.change(sortSelector, {

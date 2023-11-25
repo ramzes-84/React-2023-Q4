@@ -1,26 +1,25 @@
-import { Search } from "./components/search";
-import { NewsSection } from "./components/news-section";
-import { StorageValues } from "./types";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { ErrorThrower } from "./components/error-thrower";
-import { RootState } from "./store/store";
-import { useDispatch, useSelector } from "react-redux";
-import { newsApi } from "./service/newsApi";
-import { newsSlice } from "./store/news-slice";
-import { totalPagesSlice } from "./store/total-pages-slice";
-import { newsLoaderSlice } from "./store/loaders-slice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { newsApi } from "../../../service/newsApi";
+import { useAppDispatch } from "../../../store/hooks";
+import { totalPagesSlice } from "../../../store/total-pages-slice";
+import { newsSlice } from "../../../store/news-slice";
+import { newsLoaderSlice } from "../../../store/loaders-slice";
+import { Search } from "../../../components/search";
+import { ErrorThrower } from "../../../components/error-thrower";
+import { NewsSection } from "../../../components/news-section";
+import { StorageValues } from "../../../types";
 
-export default function App() {
+export default function Home() {
   const params = useSelector((state: RootState) => state.params.value);
   const { data, isLoading } = newsApi.useGetNewsQuery(params);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [errorMsg, setErrorMsg] = useState<null | string>(null);
   useEffect(() => {
     if (errorMsg) throw new Error(errorMsg);
   });
-  const [, setUrlParams] = useSearchParams();
 
   useEffect(() => {
     if (data) {
@@ -32,8 +31,7 @@ export default function App() {
 
   useEffect(() => {
     localStorage.setItem(StorageValues.Settings, JSON.stringify(params));
-    setUrlParams(params);
-  }, [params, setUrlParams]);
+  }, [params]);
 
   return (
     <section className="flex flex-col items-stretch">

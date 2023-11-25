@@ -1,45 +1,41 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
-import './index.css';
-import { ErrorBoundary } from './components/error-boundary.tsx';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { ErrorPage } from './components/error-page.tsx';
-import { SingleView } from './components/single-view.tsx';
-import { Navigation } from './components/navigation.tsx';
-import { Provider } from 'react-redux';
-import { store } from './store/store.ts';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
+import { ErrorBoundary } from "./components/error-boundary.tsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ErrorPage } from "./components/error-page.tsx";
+import { SingleView } from "./components/single-view.tsx";
+import { Navigation } from "./components/navigation.tsx";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Navigation />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <App />,
         children: [
           {
-            path: 'split/*',
+            path: "split/*",
             element: <SingleView />,
           },
         ],
       },
       {
-        path: 'article/*',
+        path: "article/*",
         element: <SingleView />,
       },
     ],
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ErrorBoundary>
-        <RouterProvider router={router} />
-      </ErrorBoundary>
-    </Provider>
+    <ErrorBoundary>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
   </React.StrictMode>
 );
