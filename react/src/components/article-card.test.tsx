@@ -1,16 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { ArticleCard } from "./article-card";
-import { BrowserRouter } from "react-router-dom";
 import { articleResponse } from "../utils/test-data";
 
 describe("ArticleCard component", () => {
   it("Ensure that the card component renders the relevant card data", () => {
-    render(
-      <BrowserRouter>
-        <ArticleCard article={articleResponse} />
-      </BrowserRouter>
-    );
+    render(<ArticleCard article={articleResponse} />);
 
     const btn = screen.getByText("🌐");
     const webTitle = screen.getByText("webTitle");
@@ -21,32 +16,14 @@ describe("ArticleCard component", () => {
     expect(trailText).toBeInTheDocument();
   });
 
-  it("Validate that clicking on a card opens a detailed card component", () => {
-    act(() => {
-      render(
-        <BrowserRouter>
-          <ArticleCard article={articleResponse} />
-        </BrowserRouter>
-      );
-    });
-    expect(document.location.pathname).toEqual("/");
-
-    const btn = screen.getByText("🔍");
-    fireEvent.click(btn);
-
-    expect(document.location.pathname).toEqual("/split/id");
-  });
-
   it("Validate that NO IMAGE is shown", () => {
     articleResponse.fields.thumbnail = "";
-    render(
-      <BrowserRouter>
-        <ArticleCard article={articleResponse} />
-      </BrowserRouter>
-    );
+    render(<ArticleCard article={articleResponse} />);
     const img: HTMLImageElement = screen.getByRole("img");
 
     expect(img).toBeInTheDocument();
-    expect(img.src).toEqual("http://localhost:3000/no-image.png");
+    expect(img.src).toEqual(
+      "http://localhost:3000/_next/image?url=%2Fno-image.png&w=640&q=75"
+    );
   });
 });
