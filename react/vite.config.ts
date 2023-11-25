@@ -14,7 +14,11 @@ export default defineConfig({
       all: true,
       provider: "v8",
       include: ["src/**/*.tsx", "src/**/*.ts"],
-      exclude: ["src/main.tsx", "src/vite-env.d.ts"],
+      exclude: [
+        "src/utils/test-utils.ts",
+        "src/vite-env.d.ts",
+        "src/store/hooks.ts",
+      ],
     },
     clearMocks: true,
   },
