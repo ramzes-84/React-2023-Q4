@@ -4,7 +4,7 @@ import {
   PageLimitValue,
   RequestParams,
   Sort,
-} from "./types";
+} from "../types";
 
 export const articleResponse: ArticleInCatalog = {
   id: "id",

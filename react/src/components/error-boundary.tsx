@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { AppProps } from "../utils/types";
+import { AppProps } from "../types";
 import { Navigation } from "./navigation";
 
 type ErrorState = {

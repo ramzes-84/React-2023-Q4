@@ -1,4 +1,4 @@
-import { RequestParams, AppUrlParams, Sort, PageLimitValue } from "./types";
+import { RequestParams, AppUrlParams, PageLimitValue, Sort } from "../types";
 
 export const paramsCreator = (urlParams: URLSearchParams): RequestParams => {
   const appParams = {

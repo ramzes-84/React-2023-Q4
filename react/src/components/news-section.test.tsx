@@ -11,9 +11,25 @@ vi.mock("./spinner", () => {
 });
 
 vi.mock("next/navigation", () => ({
-  useSearchParams: vi.fn().mockReturnValue({
-    get: vi.fn().mockReturnValue("0"),
-  }),
+  useSearchParams: vi
+    .fn()
+    .mockReturnValue({ entries: vi.fn().mockReturnValue([["details", "0"]]) }),
+}));
+
+vi.mock("../service/newsApi", async () => {
+  const actual = await vi.importActual("../service/newsApi");
+  return {
+    ...(actual as object),
+    useGetNewsQuery: vi.fn().mockReturnValue({ data: false, isLoading: true }),
+  };
+});
+
+vi.mock("next/router", () => ({
+  useRouter() {
+    return {
+      query: { id: ["id", "id"] },
+    };
+  },
 }));
 
 describe("NewsSection component", () => {

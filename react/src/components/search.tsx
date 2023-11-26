@@ -1,10 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import {
-  AppUrlParams,
-  PageLimitValue,
-  RequestParams,
-  Sort,
-} from "../utils/types";
+import { AppUrlParams, PageLimitValue, RequestParams, Sort } from "../types";
 import { RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { paramsSlice } from "../store/params-slice";

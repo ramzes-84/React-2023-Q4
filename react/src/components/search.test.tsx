@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Search } from "./search";
-import { PageLimitValue, Sort } from "../utils/types";
+import { PageLimitValue, Sort } from "../types";
 
 vi.mock("react-redux", () => {
   return {

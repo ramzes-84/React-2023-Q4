@@ -1,6 +1,6 @@
 import { expect, it, describe, vi } from "vitest";
 import { paramsCreator } from "./params-creator";
-import { PageLimitValue, Sort } from "./types";
+import { PageLimitValue, Sort } from "../types";
 
 describe.concurrent("Config creator function tests", () => {
   it("Should return default values when LS & url search params not provided", () => {
