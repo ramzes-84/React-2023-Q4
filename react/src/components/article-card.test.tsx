@@ -1,7 +1,15 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { ArticleCard } from "./article-card";
 import { articleResponse } from "../utils/test-data";
+
+vi.mock("next/router", () => ({
+  useRouter() {
+    return {
+      asPath: "id",
+    };
+  },
+}));
 
 describe("ArticleCard component", () => {
   it("Ensure that the card component renders the relevant card data", () => {
