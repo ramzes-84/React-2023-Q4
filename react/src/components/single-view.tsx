@@ -4,32 +4,14 @@ import { skipToken } from "@reduxjs/toolkit/query";
 import { Spinner } from "./spinner";
 import { CloseBtn } from "./close-btn";
 import { useRouter } from "next/dist/client/router";
-import { wrapper } from "../store/store";
-import {
-  getArticle,
-  getRunningQueriesThunk,
-  useGetArticleQuery,
-} from "../service/newsApi";
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    const id = context.resolvedUrl;
-    if (typeof id === "string") {
-      const cuttedId = id.replace("article/", "").replace("split/", "");
-      store.dispatch(getArticle.initiate(cuttedId));
-    }
-
-    await Promise.all(store.dispatch(getRunningQueriesThunk()));
-
-    return {
-      props: {},
-    };
-  }
-);
+import { useGetArticleQuery } from "../service/newsApi";
 
 export const SingleView = () => {
   const router = useRouter();
-  const id = router.pathname;
+  let id = router.query.id;
+  if (id instanceof Array) {
+    id = id.join("/");
+  }
   const result = useGetArticleQuery(typeof id === "string" ? id : skipToken, {
     skip: router.isFallback,
   });

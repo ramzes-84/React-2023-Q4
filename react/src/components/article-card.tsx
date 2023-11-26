@@ -1,15 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArticleInCatalog } from "../types";
+import { useRouter } from "next/router";
 
 interface ArticleCardProps {
   article: ArticleInCatalog;
 }
 
 export function ArticleCard({ article }: ArticleCardProps) {
+  const queryString = useRouter()
+    .asPath.replace("/", "")
+    .replace("details=0", "details=1");
+
   return (
     <div className="flex flex-row border rounded-2xl border-slate-500 overflow-hidden">
-      <Link href={`/split/${article.id}?details=1`} className="flex flex-row">
+      <Link
+        href={`/split/${article.id}${queryString}`}
+        className="flex flex-row"
+      >
         <Image
           className="hidden sm:block h-auto w-auto"
           width={320}
