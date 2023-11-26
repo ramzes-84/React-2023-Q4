@@ -24,7 +24,6 @@ const enum AdditionalFields {
 }
 
 export const newsApi = createApi({
-  // reducerPath: "newsApi",
   baseQuery: fetchBaseQuery({ baseUrl: ENDPOINT }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {

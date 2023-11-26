@@ -1,9 +1,6 @@
 import { RequestParams, AppUrlParams, Sort, PageLimitValue } from "./types";
 
-export const paramsCreator = (
-  // savedParams: RequestParams,
-  urlParams: URLSearchParams
-): RequestParams => {
+export const paramsCreator = (urlParams: URLSearchParams): RequestParams => {
   const appParams = {
     [AppUrlParams.Query]: urlParams.get(AppUrlParams.Query) || "",
     [AppUrlParams.Limit]:

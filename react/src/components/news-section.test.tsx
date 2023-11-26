@@ -16,31 +16,6 @@ vi.mock("next/navigation", () => ({
   }),
 }));
 
-// vi.mock("../service/newsApi", async () => {
-//   const actual = await vi.importActual("../service/newsApi");
-//   return {
-//     ...(actual as object),
-//     useGetArticleQuery: vi
-//       .fn()
-//       .mockReturnValueOnce({ data: false, isError: false, isLoading: true })
-//       .mockReturnValue({
-//         data: {
-//           id: "id",
-//           webPublicationDate: "2023-11-10T03:39:59Z",
-//           webTitle: "webTitle",
-//           fields: {
-//             headline: "headline",
-//             trailText: "Follow live",
-//             thumbnail: "https://test.com/",
-//             body: "body",
-//           },
-//         },
-//         isError: false,
-//         isLoading: false,
-//       }),
-//   };
-// });
-
 describe("NewsSection component", () => {
   it("Should show spinner on loading", () => {
     render(
@@ -53,14 +28,4 @@ describe("NewsSection component", () => {
 
     expect(spinner).toBeInTheDocument();
   });
-
-  // it("Check that article is displayed on success fetch", () => {
-  //   render(<SingleView />);
-
-  //   const title = screen.getByText("webTitle");
-  //   const body = screen.getByText("body");
-
-  //   expect(title).toBeInTheDocument();
-  //   expect(body).toBeInTheDocument();
-  // });
 });
