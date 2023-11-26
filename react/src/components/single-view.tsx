@@ -29,7 +29,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
 export const SingleView = () => {
   const router = useRouter();
-  const id = (router.query.id as string[]).join("/");
+  const id = router.pathname;
   const result = useGetArticleQuery(typeof id === "string" ? id : skipToken, {
     skip: router.isFallback,
   });
