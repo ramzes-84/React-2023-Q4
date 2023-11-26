@@ -16,6 +16,14 @@ vi.mock("../components/news-section", () => {
   };
 });
 
+vi.mock("next/router", () => ({
+  useRouter() {
+    return {
+      query: { id: ["id", "id"] },
+    };
+  },
+}));
+
 describe("Split view component", () => {
   it("Should render content", () => {
     render(

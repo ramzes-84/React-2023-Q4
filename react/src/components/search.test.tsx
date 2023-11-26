@@ -3,12 +3,13 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Search } from "./search";
 import { PageLimitValue, Sort } from "../types";
 
-vi.mock("react-redux", () => {
-  return {
-    useSelector: vi.fn().mockReturnValue({}),
-    useDispatch: vi.fn(),
-  };
-});
+vi.mock("next/router", () => ({
+  useRouter() {
+    return {
+      query: { id: ["id", "id"] },
+    };
+  },
+}));
 
 describe("Search component", () => {
   it("Should render the form elements", () => {
