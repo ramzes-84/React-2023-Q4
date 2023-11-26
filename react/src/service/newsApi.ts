@@ -24,13 +24,14 @@ const enum AdditionalFields {
 }
 
 export const newsApi = createApi({
-  reducerPath: "newsApi",
+  // reducerPath: "newsApi",
   baseQuery: fetchBaseQuery({ baseUrl: ENDPOINT }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
       return action.payload[reducerPath];
     }
   },
+  tagTypes: [],
   endpoints: (builder) => ({
     getNews: builder.query<NewsResponse<ArticleInCatalog[]>, RequestParams>({
       query: (params) => ({
@@ -43,7 +44,6 @@ export const newsApi = createApi({
           [NewsUrlQuery.page]: params.page,
           [NewsUrlQuery.q]: params.q,
         },
-        refetchOnFocus: true,
       }),
       transformResponse: (resp: {
         response: NewsResponse<ArticleInCatalog[]>;

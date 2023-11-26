@@ -30,20 +30,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 );
 
 export function NewsSection() {
-  // const router = useRouter();
-  // const result = useGetNewsQuery(
-  //   {
-  //     [AppUrlParams.Details]: "0",
-  //     [AppUrlParams.Limit]: PageLimitValue.ten,
-  //     [AppUrlParams.Page]: "1",
-  //     [AppUrlParams.Query]: "",
-  //     [AppUrlParams.Sort]: Sort.Newest,
-  //   },
-  //   {
-  //     skip: router.isFallback,
-  //   }
-  // );
-
   const detailsFlag = !!useSearchParams().get(AppUrlParams.Details);
   const isLoading = useAppSelector(
     (state: RootState) => state.newsLoader.value

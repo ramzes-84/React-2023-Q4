@@ -1,19 +1,27 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import Page from "../pages/article/[...id]";
+import { Provider } from "react-redux";
+import { store } from "../store/store";
 
-vi.mock("../components/single-view", () => {
-  return {
-    SingleView: vi.fn().mockReturnValue(<div>Single view</div>),
-  };
-});
+vi.mock("next/dist/client/router", () => ({
+  useRouter() {
+    return {
+      query: { id: ["id", "id"] },
+    };
+  },
+}));
 
 describe("Single article page", () => {
   it("Should render content", () => {
-    render(<Page />);
+    render(
+      <Provider store={store()}>
+        <Page />
+      </Provider>
+    );
 
-    const article = screen.getByText("Single view");
+    const spinner = screen.getByAltText("Loading...");
 
-    expect(article).toBeInTheDocument();
+    expect(spinner).toBeInTheDocument();
   });
 });

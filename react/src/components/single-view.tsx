@@ -1,8 +1,9 @@
-import { Spinner } from "./spinner";
 import Link from "next/link";
+import Image from "next/image";
+import { skipToken } from "@reduxjs/toolkit/query";
+import { Spinner } from "./spinner";
 import { CloseBtn } from "./close-btn";
 import { useRouter } from "next/dist/client/router";
-import Image from "next/image";
 import { wrapper } from "../store/store";
 import {
   getArticle,
@@ -12,8 +13,11 @@ import {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
-    const id = (context.params?.id as string[]).join("/");
-    store.dispatch(getArticle.initiate(id));
+    const id = context.resolvedUrl;
+    if (typeof id === "string") {
+      const cuttedId = id.replace("article/", "").replace("split/", "");
+      store.dispatch(getArticle.initiate(cuttedId));
+    }
 
     await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
@@ -26,7 +30,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 export const SingleView = () => {
   const router = useRouter();
   const id = (router.query.id as string[]).join("/");
-  const result = useGetArticleQuery(id, {
+  const result = useGetArticleQuery(typeof id === "string" ? id : skipToken, {
     skip: router.isFallback,
   });
   const { isLoading, data } = result;

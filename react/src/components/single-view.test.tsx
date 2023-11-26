@@ -16,8 +16,10 @@ vi.mock("next/dist/client/router", () => ({
   },
 }));
 
-vi.mock("../service/newsApi", () => {
+vi.mock("../service/newsApi", async () => {
+  const actual = await vi.importActual("../service/newsApi");
   return {
+    ...(actual as object),
     useGetArticleQuery: vi
       .fn()
       .mockReturnValueOnce({ data: false, isError: false, isLoading: true })
