@@ -1,34 +1,20 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import { AppUrlParams, PageLimitValue, RequestParams, Sort } from "../types";
-import { RootState } from "../store/store";
-import { useDispatch, useSelector } from "react-redux";
-import { paramsSlice } from "../store/params-slice";
-import { newsLoaderSlice } from "../store/loaders-slice";
+import { useRouter } from "next/router";
 
 export function Search() {
-  const dispatch = useDispatch();
-  const params = useSelector((state: RootState) => state.params.value);
-  const [sorting, setSorting] = useState<Sort>(params.sort);
-  const [itemsPerPage, setItemsPerPage] = useState<PageLimitValue>(
-    params.limit
-  );
+  const router = useRouter();
+  const queryParams = router.query as RequestParams;
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const newParams = {
-      ...params,
+      ...queryParams,
       [e.target.name]: e.target.value,
       page: "1",
     };
-    switch (e.target.name) {
-      case AppUrlParams.Limit:
-        setItemsPerPage(e.target.value as PageLimitValue);
-        break;
-      case AppUrlParams.Sort:
-        setSorting(e.target.value as Sort);
-        break;
-    }
-    dispatch(newsLoaderSlice.actions.isLoadingNews(true));
-    dispatch(paramsSlice.actions.updateParams(newParams));
+    router.push(
+      `?${AppUrlParams.Details}=0&${AppUrlParams.Limit}=${newParams.limit}&${AppUrlParams.Page}=${newParams.page}&${AppUrlParams.Query}=${newParams.q}&${AppUrlParams.Sort}=${newParams.sort}`
+    );
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,8 +32,9 @@ export function Search() {
         page: "1",
         details: "0",
       };
-      dispatch(newsLoaderSlice.actions.isLoadingNews(true));
-      dispatch(paramsSlice.actions.updateParams(newParams));
+      router.push(
+        `?${AppUrlParams.Details}=0&${AppUrlParams.Limit}=${newParams.limit}&${AppUrlParams.Page}=${newParams.page}&${AppUrlParams.Query}=${newParams.q}&${AppUrlParams.Sort}=${newParams.sort}`
+      );
     } else throw new Error("The form isn`t complete");
   };
 
@@ -64,12 +51,12 @@ export function Search() {
           className="text-black px-1 rounded"
           type="text"
           name="q"
-          defaultValue={params.q}
+          defaultValue={queryParams.q}
         />
         <select
           className="text-black px-1 rounded"
           name="limit"
-          value={itemsPerPage}
+          defaultValue={queryParams.limit}
           onChange={handleSelectChange}
         >
           <option value="10">10 items per page</option>
@@ -81,7 +68,7 @@ export function Search() {
         <select
           className="text-black px-1 rounded"
           name="sort"
-          value={sorting}
+          defaultValue={queryParams.sort}
           onChange={handleSelectChange}
         >
           <option value="newest">Show newest first</option>
