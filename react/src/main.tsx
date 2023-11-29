@@ -5,11 +5,20 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
+import { UsualForm } from './components/usual-form.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+  },
+  {
+    path: 'usual-form',
+    element: <UsualForm />,
+  },
+  {
+    path: 'hook-form',
+    element: <div>Hook Form</div>,
   },
 ]);
 
