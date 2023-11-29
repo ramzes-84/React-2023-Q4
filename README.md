@@ -4,7 +4,7 @@
 >
 > Do it for setup husky!
 >
-> Open trminal and run:
+> Open trminal, change dirctory to `react` and run:
 >
 > - chmod ug+x .husky/\*
 > - chmod ug+x .git/hooks/\*
