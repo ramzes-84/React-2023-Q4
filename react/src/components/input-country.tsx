@@ -6,6 +6,7 @@ export const InputCountry = () => {
         className="px-2 mx-2 rounded text-blue-900"
         type="text"
         name="country"
+        id="country"
         placeholder="Start typing your contry"
       />
     </label>
