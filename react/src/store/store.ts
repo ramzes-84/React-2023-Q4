@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { usualFormDataSlice } from './form-data-slice';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    usualFormData: usualFormDataSlice.reducer,
+  },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
 });
 
