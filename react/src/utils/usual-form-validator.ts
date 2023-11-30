@@ -1,4 +1,4 @@
-import Yup, { boolean, number, object, string } from 'yup';
+import { boolean, number, object, string } from 'yup';
 import { Gender } from './types';
 
 export const usualFormSchema = object({
@@ -9,7 +9,7 @@ export const usualFormSchema = object({
   gender: string<Gender>().required(),
   name: string().required(),
   password: string().required(),
-  confirm: string().required(),
+  confirm: string().required('Confirm password is a required field'),
   terms: boolean<true>().required(),
 });
 // : ObjectSchema<
