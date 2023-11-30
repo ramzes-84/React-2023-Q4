@@ -1,3 +1,5 @@
+import { Gender } from '../utils/types';
+
 export const InputGender = () => {
   return (
     <label className="text-white " htmlFor="gender">
@@ -7,9 +9,9 @@ export const InputGender = () => {
         name="gender"
         id="gender"
       >
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="other">Other</option>
+        <option value={Gender.Male}>Male</option>
+        <option value={Gender.Female}>Female</option>
+        <option value={Gender.Other}>Other</option>
       </select>
     </label>
   );
