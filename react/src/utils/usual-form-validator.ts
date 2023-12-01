@@ -2,7 +2,10 @@ import { boolean, number, object, string } from 'yup';
 import { Gender } from './types';
 
 export const usualFormSchema = object({
-  age: number().required().positive().integer(),
+  age: number()
+    .required()
+    .positive('Age field must be positive')
+    .integer('Age field must be a number'),
   country: string().required(),
   email: string().email('Email is not valid').required(),
   // file: string().required(),
@@ -23,7 +26,14 @@ export const usualFormSchema = object({
     }),
   password: string()
     .min(4, 'Password must be at least 4 characters long')
-    .required(),
+    .matches(
+      /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{4,}/g,
+      {
+        message:
+          'Please ensure that password contains at least 1 number (0-9), 1 special character(!@#$%^&*), 1 uppercased (A-Z) and 1 lowercased (a-z) latin letter',
+      }
+    )
+    .required('Password is a required field'),
   confirm: string()
     .required('Confirm password is a required field')
     .test({
