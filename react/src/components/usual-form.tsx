@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { InputName } from './input-name';
 import { InputAge } from './input-age';
 import { InputEmail } from './input-email';
@@ -7,17 +7,25 @@ import { InputGender } from './input-gender';
 import { InputTerms } from './input-terms';
 import { InputFile } from './input-file';
 import { InputCountry } from './input-country';
-import { FormElements, Gender, UsualFormData } from '../utils/types';
+import {
+  FormElements,
+  Gender,
+  HandeledFormData,
+  UsualFormData,
+} from '../utils/types';
 import { usualFormSchema } from '../utils/usual-form-validator';
 import { useState } from 'react';
 import { ValidationError } from 'yup';
 import { ValidationErrors } from './validation-errors';
+import { useDispatch } from 'react-redux';
+import { usualFormDataSlice } from '../store/form-data-slice';
 
 export const UsualForm = () => {
+  const dispatch = useDispatch();
   const [validErrs, setValidErrs] = useState<string[]>([]);
-  // const navigate = useNavigate;
+  const navigator = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formElements = e.target as unknown as FormElements;
     const formData: UsualFormData = {
@@ -33,19 +41,23 @@ export const UsualForm = () => {
     };
     let result;
     try {
-      result = await usualFormSchema.validate(formData);
+      result = usualFormSchema.validateSync(formData, { abortEarly: false });
     } catch (error) {
       if (error instanceof ValidationError) {
         setValidErrs(error.errors);
       }
     }
     if (result) {
-      setValidErrs([]);
+      setValidErrs(['Everything is fine now! Success!']);
+      dispatch(
+        usualFormDataSlice.actions.updateData(result as HandeledFormData)
+      );
+      setTimeout(() => navigator('/'), 1000);
     }
   };
 
   return (
-    <section className="flex items-center justify-center bg-gradient-to-r from-pink-500 to-cyan-500 h-screen">
+    <section className="flex flex-col gap-3 items-center bg-gradient-to-r from-pink-500 to-cyan-500 h-screen py-5">
       <form
         className="flex flex-col justify-center items-center gap-2"
         onSubmit={handleSubmit}
@@ -68,12 +80,8 @@ export const UsualForm = () => {
             Back
           </Link>
         </div>
-        {validErrs.length > 0 ? (
-          <div className="relative text-white border px-3 py-1 rounded-lg">
-            <ValidationErrors errArr={validErrs} />
-          </div>
-        ) : null}
       </form>
+      {validErrs.length > 0 ? <ValidationErrors errArr={validErrs} /> : null}
     </section>
   );
 };
