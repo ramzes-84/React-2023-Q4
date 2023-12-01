@@ -1,4 +1,11 @@
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../store/store';
+
 export const InputCountry = () => {
+  // const countryList = useSelector(
+  //   (state: RootState) => state.countries.COUNTRIES
+  // );
+
   return (
     <label className="text-white " htmlFor="name">
       Country:
