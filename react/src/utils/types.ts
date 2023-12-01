@@ -1,3 +1,6 @@
+import { InferType } from 'yup';
+import { usualFormSchema } from './usual-form-validator';
+
 export type FormElements = {
   age: HTMLInputElement;
   country: HTMLInputElement;
@@ -22,20 +25,22 @@ export type UsualFormData = {
   terms: boolean;
 };
 
-export type HandeledFormData = {
-  age: number;
-  country: string;
-  email: string;
-  file: string;
-  gender: Gender;
-  name: string;
-  password: string;
-  confirm: string;
-  terms: boolean;
-};
+// export type HandeledFormData = {
+//   age: number;
+//   country: string;
+//   email: string;
+//   file: string;
+//   gender: Gender;
+//   name: string;
+//   password: string;
+//   confirm: string;
+//   terms: boolean;
+// };
 
 export enum Gender {
   Male = 'male',
   Female = 'female',
   Other = 'other',
 }
+
+export type HandeledFormData = InferType<typeof usualFormSchema>;

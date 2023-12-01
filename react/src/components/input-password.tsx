@@ -5,7 +5,8 @@ export const InputPassword = () => {
         Password:
         <input
           className="px-2 mx-2 rounded text-blue-900"
-          type="password"
+          //TODO replace type=text with type=password
+          type="text"
           name="password"
           id="password"
         />
@@ -14,7 +15,7 @@ export const InputPassword = () => {
         Confirm password:
         <input
           className="px-2 mx-2 rounded text-blue-900"
-          type="password"
+          type="text"
           name="confirm"
           id="confirm"
         />
