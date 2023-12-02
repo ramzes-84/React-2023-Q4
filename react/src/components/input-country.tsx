@@ -17,6 +17,7 @@ export const InputCountry = () => {
         .filter((country) => country.includes(transformedKeyword))
         .map((country) => (
           <li
+            className="hover:bg-white"
             key={country}
             onClick={() => {
               if (!ref.current) throw Error('ref is not assigned');
@@ -44,7 +45,9 @@ export const InputCountry = () => {
         onChange={handleChange}
       />
       {searchResults.length > 0 ? (
-        <ul className="absolute bg-white text-slate-800">{searchResults}</ul>
+        <ul className="absolute border-2 bg-green-200 rounded left-20  text-slate-800">
+          {searchResults}
+        </ul>
       ) : null}
     </label>
   );
