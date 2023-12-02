@@ -19,20 +19,24 @@ import { ValidationError } from 'yup';
 import { ValidationErrors } from './validation-errors';
 import { useDispatch } from 'react-redux';
 import { usualFormDataSlice } from '../store/form-data-slice';
+import { convertBase64 } from '../utils/base64-encode';
 
 export const UsualForm = () => {
   const dispatch = useDispatch();
   const [validErrs, setValidErrs] = useState<string[]>([]);
   const navigator = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formElements = e.target as unknown as FormElements;
+    if (!formElements.file.files) throw new Error('None files attached');
+    const fileFromInput = formElements.file.files[0];
+    const base64 = await convertBase64(fileFromInput);
     const formData: UsualFormData = {
       age: formElements.age.value,
       country: formElements.country.value,
       email: formElements.email.value,
-      file: formElements.file.value,
+      file: base64 as string,
       gender: formElements.gender.value as Gender,
       name: formElements.name.value,
       password: formElements.password.value,

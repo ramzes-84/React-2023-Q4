@@ -1,5 +1,6 @@
 import { boolean, number, object, string } from 'yup';
 import { Gender } from './types';
+// import { convertBase64 } from './base64-encode';
 
 export const usualFormSchema = object({
   age: number()
@@ -8,9 +9,17 @@ export const usualFormSchema = object({
     .integer('Age field must be a number'),
   country: string().required(),
   email: string().email('Email is not valid').required(),
-  // file: string().required(),
+  file: string()
+    // .transform(async (value: FileList) => {
+    //   const file = value[0];
+    //   const base64 = await convertBase64(file);
+    //   console.log(base64);
+    //   return base64;
+    // })
+    .required('You did not add file'),
   gender: string<Gender>().required(),
   name: string()
+    .trim()
     .required()
     .test({
       name: '1stUpperCase',
@@ -49,11 +58,5 @@ export const usualFormSchema = object({
       },
     }),
 
-  terms: boolean<true>().required(),
+  terms: boolean<true>().required().isTrue('You have to agree with T&C'),
 });
-// : ObjectSchema<
-//   HandeledFormData,
-//   AnyObject,
-//   UsualFormData,
-//   ''
-// >

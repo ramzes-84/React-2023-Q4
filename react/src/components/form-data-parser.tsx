@@ -12,6 +12,8 @@ export const FormDataParser = ({ obj }: ParserProps) => {
       <p>Password: {obj.password}</p>
       <p>Country: {obj.country}</p>
       <p>Sex: {obj.gender}</p>
+      <p>Agreed with T&C: {obj.terms ? 'yes' : 'no'}</p>
+      <img className="max-w-[200px]" src={obj.file} alt="" />
     </div>
   );
 };

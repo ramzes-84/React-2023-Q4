@@ -17,7 +17,7 @@ export type UsualFormData = {
   age: string;
   country: string;
   email: string;
-  file: string;
+  file: string | null;
   gender: Gender;
   name: string;
   password: string;
