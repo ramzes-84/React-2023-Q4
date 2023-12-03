@@ -7,6 +7,10 @@ export default function App() {
   const usualFormData = useSelector(
     (state: RootState) => state.usualFormData.dataObj
   );
+  const reactHookFormData = useSelector(
+    (state: RootState) => state.reactHookFormData.dataRHF
+  );
+
   return (
     <main className="flex flex-col items-center justify-center bg-gradient-to-r from-cyan-500 to-pink-500 h-screen">
       <h1 className="text-2xl text-white text-center">Hello world!</h1>
@@ -17,9 +21,12 @@ export default function App() {
           </Link>
           {usualFormData && <FormDataParser obj={usualFormData} />}
         </div>
-        <Link className="p-3 bg-cyan-400 rounded-lg" to={'hook-form'}>
-          React Hook Form Page
-        </Link>
+        <div className="flex flex-col gap-2">
+          <Link className="p-3 bg-cyan-400 rounded-lg" to={'hook-form'}>
+            React Hook Form Page
+          </Link>
+          {reactHookFormData && <FormDataParser obj={reactHookFormData} />}
+        </div>
       </section>
     </main>
   );

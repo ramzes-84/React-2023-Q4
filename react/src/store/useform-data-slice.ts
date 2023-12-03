@@ -3,11 +3,11 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { Inputs } from '../components/react-hook-form';
 
 export interface ReactHookFormState {
-  dataObj: Inputs | null;
+  dataRHF: Inputs | null;
 }
 
 const initialState: ReactHookFormState = {
-  dataObj: null,
+  dataRHF: null,
 };
 
 export const reactHookFormDataSlice = createSlice({
@@ -15,7 +15,7 @@ export const reactHookFormDataSlice = createSlice({
   initialState,
   reducers: {
     updateData: (state, action: PayloadAction<Inputs>) => {
-      state.dataObj = action.payload;
+      state.dataRHF = action.payload;
     },
   },
 });

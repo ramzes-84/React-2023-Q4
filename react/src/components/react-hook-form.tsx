@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Gender } from '../utils/types';
-import { ChangeEvent, ReactElement, useRef, useState } from 'react';
+import { ChangeEvent, ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,23 +22,24 @@ export type Inputs = {
 
 export const ReactHookForm = () => {
   const dispatch = useDispatch();
-
+  const navigator = useNavigate();
   const {
     register,
     handleSubmit,
-    // watch,
+    setValue,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(usualFormSchema),
   });
-  const onSubmit: SubmitHandler<Inputs> = (data) =>
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
     dispatch(reactHookFormDataSlice.actions.updateData(data));
+    setTimeout(() => navigator('/'), 1000);
+  };
 
   const countryList = useSelector(
     (state: RootState) => state.countries.COUNTRIES
   );
   const [searchResults, setSearchResults] = useState<ReactElement[]>([]);
-  const ref = useRef<HTMLInputElement>(null);
 
   const handleChangeCountry = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
@@ -51,8 +52,7 @@ export const ReactHookForm = () => {
             className="hover:bg-white"
             key={country}
             onClick={() => {
-              if (!ref.current) throw Error('ref is not assigned');
-              ref.current.value = country;
+              setValue('country', country);
               setSearchResults([]);
             }}
           >
@@ -130,7 +130,6 @@ export const ReactHookForm = () => {
           Country:
           <input
             {...register('country')}
-            ref={ref}
             className="px-2 mx-2 rounded text-blue-900"
             type="text"
             name="country"
