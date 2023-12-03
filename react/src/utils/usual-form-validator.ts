@@ -1,6 +1,5 @@
 import { boolean, number, object, string } from 'yup';
 import { Gender } from './types';
-// import { convertBase64 } from './base64-encode';
 
 export const age = number()
   .required()
@@ -8,14 +7,7 @@ export const age = number()
   .integer('Age field must be a number');
 export const country = string().required();
 export const email = string().email('Email is not valid').required();
-export const file = string()
-  // .transform(async (value: FileList) => {
-  //   const file = value[0];
-  //   const base64 = await convertBase64(file);
-  //   console.log(base64);
-  //   return base64;
-  // })
-  .required('You did not add file');
+export const file = string().required('You did not add file');
 export const gender = string<Gender>().required();
 export const name = string()
   .trim()
