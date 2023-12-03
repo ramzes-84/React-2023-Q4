@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
 import { UsualForm } from './components/usual-form.tsx';
+import { ReactHookForm } from './components/react-hook-form.tsx';
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'hook-form',
-    element: <div>Hook Form</div>,
+    element: <ReactHookForm />,
   },
 ]);
 
